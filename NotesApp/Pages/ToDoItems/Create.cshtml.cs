@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
 
@@ -19,10 +20,24 @@ namespace NotesApp.Pages.ToDoItems
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync(int? noteId)
         {
+            if (noteId == null || _context.Note == null)
+            {
+                return NotFound();
+            }
+
+            var note = await _context.Note.FirstOrDefaultAsync(m => m.Id == noteId);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            Note = note;
             return Page();
         }
+
+        public Note Note { get; set; }
 
         [BindProperty]
         public ToDoItem ToDoItem { get; set; }
@@ -36,6 +51,7 @@ namespace NotesApp.Pages.ToDoItems
                 return Page();
             }
 
+            ToDoItem.Note = Note;
             ToDoItem.CreationDate = DateTime.Now.Date;
             _context.ToDoItem.Add(ToDoItem);
             await _context.SaveChangesAsync();

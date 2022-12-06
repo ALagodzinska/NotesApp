@@ -8,18 +8,17 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Note</h4>
+    <h4>@Model.Note.Title</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Note.Title)
-        </dt>
+    <dl class="row">        
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Note.Title)
+            @foreach (var todo in Model.Note.ToDoList)
+            {
+                @Html.DisplayFor(todoItem => todo.IsDone)
+                @todo.Content
+                <br />
+            }
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Note.CreationDate)
-        </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Note.CreationDate)
         </dd>

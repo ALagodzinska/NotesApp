@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
@@ -21,11 +22,16 @@ namespace NotesApp.Pages.ToDoItems
 
         public IList<ToDoItem> ToDoItem { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? noteId)
         {
+            ViewData["NoteTitle"] = _context.Note.FirstOrDefault(note => note.Id == noteId).Title;
+
             if (_context.ToDoItem != null)
             {
-                ToDoItem = await _context.ToDoItem.ToListAsync();
+                ToDoItem = await _context.ToDoItem
+                    .Where(x => x.NoteId == noteId)
+                    .Include(i => i.Note)
+                    .ToListAsync();
             }
         }
     }

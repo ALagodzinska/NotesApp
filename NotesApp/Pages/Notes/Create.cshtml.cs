@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -36,10 +37,11 @@ namespace NotesApp.Pages.Notes
                 return Page();
             }
 
+            Note.CreationDate = DateTime.Now.Date;
             _context.Note.Add(Note);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ToDoItems/Index", new { noteId = Note.Id.ToString() });
         }
     }
 }

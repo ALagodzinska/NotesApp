@@ -19,14 +19,14 @@ namespace NotesApp.Pages.Notes
             _context = context;
         }
 
-        public IList<Note> Notes { get;set; } = default!;
+        public IList<Note> Notes { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Note != null)
             {
                 Notes = await _context.Note.
-                    Include(i => i.ToDoList).                    
+                    Include(i => i.ToDoList).
                     ToListAsync();
             }
         }

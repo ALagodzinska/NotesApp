@@ -28,15 +28,16 @@ namespace NotesApp.Pages.Notes
                 return NotFound();
             }
 
-            var note = await _context.Note.FirstOrDefaultAsync(m => m.Id == id);
-            if (note == null)
+            Note = await _context.Note
+                .Include(n => n.ToDoList)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Note == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Note = note;
-            }
+
             return Page();
         }
     }
