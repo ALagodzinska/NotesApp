@@ -39,6 +39,7 @@
                     @{
                         foreach (var todo in item.ToDoList)
                         {
+                            @Html.DisplayFor(todoItem => todo.IsDone) 
                             @todo.Content <br />
                         }
                     }
