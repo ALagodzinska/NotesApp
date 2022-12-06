@@ -5,51 +5,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List of Notes</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New Note</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes[0].CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes[0].ToDoList)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Notes)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    @{
-                        foreach (var todo in item.ToDoList)
-                        {
-                            @Html.DisplayFor(todoItem => todo.IsDone) 
-                            @todo.Content <br />
-                        }
-                    }
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var note in Model.Notes)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@note.Title</h5>
+                            <p class="card-text">
+                                @foreach (var todo in note.ToDoList)
+                                {
+                                @Html.DisplayFor(todoItem => todo.IsDone)
+                                @todo.Content 
+                                <br />
+                                }
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-page="./Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">View Details</a>
+                                    <a asp-page="./Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-page="./Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                </div>
+                                <small class="text-muted">@note.CreationDate.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
