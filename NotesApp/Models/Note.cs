@@ -2,18 +2,15 @@
 
 namespace NotesApp.Models
 {
-    public class ToDoItem
+    public class Note
     {
         public int Id { get; set; }
-        [Display(Name = "Task")]
-        public string Content { get; set; }
-        [Display(Name = "Done")]
-        public bool IsDone { get; set; }
-
+        [StringLength(50, MinimumLength = 3)]
+        public string Title { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Date of creation")]
         public DateTime CreationDate { get; set; }
-        public int NoteId { get; set; }
-        public Note Note { get; set; }
+        [Display(Name = "List of ToDo Items")]
+        public ICollection<ToDoItem> ToDoList { get ; set; }
     }
 }
