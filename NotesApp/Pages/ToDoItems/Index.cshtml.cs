@@ -25,6 +25,7 @@ namespace NotesApp.Pages.ToDoItems
         public async Task OnGetAsync(int? noteId)
         {
             ViewData["NoteTitle"] = _context.Note.FirstOrDefault(note => note.Id == noteId).Title;
+            ViewData["NoteId"] = noteId;
 
             if (_context.ToDoItem != null)
             {

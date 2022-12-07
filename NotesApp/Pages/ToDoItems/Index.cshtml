@@ -8,7 +8,7 @@
 <h1>@ViewData["NoteTitle"]</h1>
 
 <p>
-    <a asp-page="Create">Create New Task</a>
+    <a asp-page="/ToDoItems/Create" asp-route-noteId="@ViewData["NoteId"]">Create New Task</a>
 </p>
 <table class="table">
     <thead>

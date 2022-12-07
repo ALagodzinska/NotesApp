@@ -33,11 +33,10 @@ namespace NotesApp.Pages.ToDoItems
                 return NotFound();
             }
 
-            Note = note;
+            ViewData["NoteId"] = noteId;
+
             return Page();
         }
-
-        public Note Note { get; set; }
 
         [BindProperty]
         public ToDoItem ToDoItem { get; set; }
@@ -51,12 +50,11 @@ namespace NotesApp.Pages.ToDoItems
                 return Page();
             }
 
-            ToDoItem.Note = Note;
             ToDoItem.CreationDate = DateTime.Now.Date;
             _context.ToDoItem.Add(ToDoItem);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ToDoItems/Index", new { noteId = ToDoItem.NoteId.ToString() });
         }
     }
 }
