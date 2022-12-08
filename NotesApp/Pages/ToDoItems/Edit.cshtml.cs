@@ -48,7 +48,17 @@ namespace NotesApp.Pages.ToDoItems
                 return Page();
             }
 
-            _context.Attach(ToDoItem).State = EntityState.Modified;
+            var foundToDo = _context.ToDoItem.FirstOrDefault(todo => todo.Id == ToDoItem.Id);
+
+            if(foundToDo == null)
+            {
+                return Page();
+            }
+
+            foundToDo.Content = ToDoItem.Content;
+            foundToDo.IsDone = ToDoItem.IsDone;
+
+            _context.Attach(foundToDo).State = EntityState.Modified;
 
             try
             {
@@ -66,7 +76,7 @@ namespace NotesApp.Pages.ToDoItems
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ToDoItems/Index", new { noteId = foundToDo.NoteId.ToString() }); ;
         }
 
         private bool ToDoItemExists(int id)
