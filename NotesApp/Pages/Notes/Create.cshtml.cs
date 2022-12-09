@@ -26,7 +26,7 @@ namespace NotesApp.Pages.Notes
         }
 
         [BindProperty]
-        public Note Note { get; set; }
+        public ToDoNote Note { get; set; }
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

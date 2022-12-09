@@ -13,17 +13,17 @@ namespace NotesApp.Data
                 return;   // DB has been seeded
             }
 
-            var firstNote = new Note
+            var firstNote = new ToDoNote
             {
                 Title = "Shop List",
                 CreationDate = DateTime.Parse("2022-09-01")
             };
-            var secondNote = new Note
+            var secondNote = new ToDoNote
             {
                 Title = "Training",
                 CreationDate = DateTime.Parse("2022-10-01")
             };
-            var thirdNote = new Note
+            var thirdNote = new ToDoNote
             {
                 Title = "Work Tasks",
                 CreationDate = DateTime.Parse("2022-09-06")

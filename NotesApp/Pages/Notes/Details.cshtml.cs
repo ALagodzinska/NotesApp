@@ -19,7 +19,7 @@ namespace NotesApp.Pages.Notes
             _context = context;
         }
 
-      public Note Note { get; set; }
+      public ToDoNote Note { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

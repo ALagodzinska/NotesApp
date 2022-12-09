@@ -20,7 +20,7 @@ namespace NotesApp.Pages.Notes
         }
 
         [BindProperty]
-      public Note Note { get; set; }
+      public ToDoNote Note { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
