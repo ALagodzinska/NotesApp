@@ -12,21 +12,31 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <input type="hidden" asp-for="ToDoItem.CreationDate" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ToDoItem.Id" />
-            <div class="form-group">
-                <label asp-for="ToDoItem.Content" class="control-label"></label>
-                <input asp-for="ToDoItem.Content" class="form-control" />
+            <div class="form-row align-items-center">
+                <input type="hidden" asp-for="ToDoItem.Id" />
+                <input type="hidden" asp-for="ToDoItem.CreationDate" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @*<div class="form-group">
+                <input asp-for="ToDoItem.Content" class="form-control mb-2" />
                 <span asp-validation-for="ToDoItem.Content" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ToDoItem.IsDone" /> @Html.DisplayNameFor(model => model.ToDoItem.IsDone)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                <div class="form-group">
+                <div class="form-check mb-2">
+                <input class="form-check-input" asp-for="ToDoItem.IsDone" id="autoSizingCheck" />
+                </div>
+                </div>*@
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <input class="form-check-input" asp-for="ToDoItem.IsDone" id="CheckBoxForToDO"/>
+                    </div>
+                    <input asp-for="ToDoItem.Content" class="form-control mb-2" />
+                    <span asp-validation-for="ToDoItem.Content" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
             </div>
         </form>
     </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
+using NuGet.Protocol;
 
 namespace NotesApp.Pages.Notes
 {
@@ -30,7 +32,8 @@ namespace NotesApp.Pages.Notes
                 return NotFound();
             }
 
-            var note =  await _context.Note.FirstOrDefaultAsync(m => m.Id == id);
+            var note =  await _context.Note
+                .Include(c => c.ToDoList).FirstOrDefaultAsync(m => m.Id == id);
             if (note == null)
             {
                 return NotFound();
@@ -50,6 +53,11 @@ namespace NotesApp.Pages.Notes
 
             _context.Attach(Note).State = EntityState.Modified;
 
+            foreach (var todo in Note.ToDoList)
+            {
+                _context.Attach(todo).State = EntityState.Modified;
+            }
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -66,7 +74,7 @@ namespace NotesApp.Pages.Notes
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/ToDoItems/Index", new { noteId = Note.Id.ToString() });
         }
 
         private bool NoteExists(int id)

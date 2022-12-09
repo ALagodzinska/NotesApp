@@ -14,16 +14,25 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Note.Id" />
+            <input type="hidden" asp-for="Note.CreationDate" />
             <div class="form-group">
                 <label asp-for="Note.Title" class="control-label"></label>
                 <input asp-for="Note.Title" class="form-control" />
                 <span asp-validation-for="Note.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Note.CreationDate" class="control-label"></label>
-                <input asp-for="Note.CreationDate" class="form-control" />
-                <span asp-validation-for="Note.CreationDate" class="text-danger"></span>
-            </div>
+            <br>
+            @foreach (var toDoItem in Model.Note.ToDoList)
+            {
+                <input type="hidden" name="Note.ToDoList.Index" value="@toDoItem.Id" />
+                <input type="hidden" name="Note.ToDoList[@toDoItem.Id].Id" value="@toDoItem.Id" />
+                <input type="hidden" name="Note.ToDoList[@toDoItem.Id].NoteId" value="@toDoItem.NoteId" />
+                <input type="hidden" name="Note.ToDoList[@toDoItem.Id].Content" value="@toDoItem.Content" />
+                <input type="hidden" name="Note.ToDoList[@toDoItem.Id].CreationDate" value="@toDoItem.CreationDate" />
+                <input class="form-check-input" name="Note.ToDoList[@toDoItem.Id].IsDone" type="checkbox" value="true" @(toDoItem.IsDone ? "checked" : "") />
+                @toDoItem.Content
+                <br />
+            }
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
