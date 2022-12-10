@@ -16,13 +16,7 @@
                 <label asp-for="ToDoItem.Content" class="control-label"></label>
                 <input asp-for="ToDoItem.Content" class="form-control" />
                 <span asp-validation-for="ToDoItem.Content" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ToDoItem.IsDone" /> @Html.DisplayNameFor(model => model.ToDoItem.IsDone)
-                </label>
-            </div>
+            </div>            
             <br />
             <div class="form-group">
                 <input type="submit" value="Add" class="btn btn-primary" />
@@ -32,7 +26,7 @@
 </div>
 
 <div>
-    <a asp-page="Index" asp-route-noteId="@ViewData["NoteId"]">Back to List</a>
+    <a asp-page="/Notes/Edit" asp-route-id="@ViewData["NoteId"]">Back to Edit Page</a>
 </div>
 
 @section Scripts {

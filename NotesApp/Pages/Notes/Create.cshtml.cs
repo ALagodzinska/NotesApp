@@ -41,7 +41,7 @@ namespace NotesApp.Pages.Notes
             _context.Note.Add(Note);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/ToDoItems/Index", new { noteId = Note.Id.ToString() });
+            return RedirectToPage("/ToDoItems/Create", new { noteId = Note.Id.ToString() });
         }
     }
 }

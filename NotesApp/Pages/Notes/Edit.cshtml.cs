@@ -74,7 +74,7 @@ namespace NotesApp.Pages.Notes
                 }
             }
 
-            return RedirectToPage("/ToDoItems/Index", new { noteId = Note.Id.ToString() });
+            return RedirectToPage("/Notes/Index");
         }
 
         private bool NoteExists(int id)

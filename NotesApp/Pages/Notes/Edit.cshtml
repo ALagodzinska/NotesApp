@@ -9,6 +9,7 @@
 
 <h4>Note</h4>
 <hr />
+<br />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -20,7 +21,9 @@
                 <input asp-for="Note.Title" class="form-control" />
                 <span asp-validation-for="Note.Title" class="text-danger"></span>
             </div>
-            <br>
+            <br />
+            <a asp-page="/ToDoItems/Create" asp-route-noteId="@Model.Note?.Id" class="btn btn-primary">Add new task</a>
+            <br />
             @foreach (var toDoItem in Model.Note.ToDoList)
             {
                 <input type="hidden" name="Note.ToDoList.Index" value="@toDoItem.Id" />
@@ -32,7 +35,7 @@
                 @toDoItem.Content
                 <br />
             }
-
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
