@@ -36,6 +36,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = firstNote,
                     IsDone = false,
+                    PriorityOrder = 1,
                 },
 
                 new ToDoItem {
@@ -43,6 +44,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = firstNote,
                     IsDone = false,
+                    PriorityOrder= 2,
                 },
 
                 new ToDoItem {
@@ -50,6 +52,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = firstNote,
                     IsDone = false,
+                    PriorityOrder = 3,
                 },
 
                 new ToDoItem {
@@ -57,6 +60,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = secondNote,
                     IsDone = false,
+                    PriorityOrder = 1,
                 },
 
                 new ToDoItem {
@@ -64,6 +68,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = secondNote,
                     IsDone = false,
+                    PriorityOrder = 2,
                 },
 
                 new ToDoItem {
@@ -71,6 +76,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = secondNote,
                     IsDone = false,
+                    PriorityOrder = 3,
                 },
 
                 new ToDoItem {
@@ -78,6 +84,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = thirdNote,
                     IsDone = false,
+                    PriorityOrder = 1,
                 },
 
                 new ToDoItem {
@@ -85,6 +92,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = thirdNote,
                     IsDone = false,
+                    PriorityOrder= 2,
                 },
 
                 new ToDoItem {
@@ -92,6 +100,7 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-06"),
                     Note = thirdNote,
                     IsDone = false,
+                    PriorityOrder = 3,
                 },
             };
 
