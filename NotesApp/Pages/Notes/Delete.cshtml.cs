@@ -24,12 +24,12 @@ namespace NotesApp.Pages.Notes
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Note == null)
+            if (id == null || _context.ToDoNotes == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.Note.FirstOrDefaultAsync(m => m.Id == id);
+            var note = await _context.ToDoNotes.FirstOrDefaultAsync(m => m.Id == id);
 
             if (note == null)
             {
@@ -44,16 +44,16 @@ namespace NotesApp.Pages.Notes
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Note == null)
+            if (id == null || _context.ToDoNotes == null)
             {
                 return NotFound();
             }
-            var note = await _context.Note.FindAsync(id);
+            var note = await _context.ToDoNotes.FindAsync(id);
 
             if (note != null)
             {
                 Note = note;
-                _context.Note.Remove(Note);
+                _context.ToDoNotes.Remove(Note);
                 await _context.SaveChangesAsync();
             }
 

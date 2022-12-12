@@ -11,6 +11,17 @@
     <a asp-page="Create">Create New Note</a>
 </p>
 
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by title:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row">
@@ -42,3 +53,19 @@
         </div>
     </div>
 </div>
+
+@{
+    var prevDisabled = !Model.Notes.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Notes.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Notes.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageIndex="@(Model.Notes.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

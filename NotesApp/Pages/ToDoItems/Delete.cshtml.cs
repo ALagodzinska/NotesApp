@@ -24,12 +24,12 @@ namespace NotesApp.Pages.ToDoItems
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.ToDoItem == null)
+            if (id == null || _context.ToDoItems == null)
             {
                 return NotFound();
             }
 
-            var todoitem = await _context.ToDoItem.FirstOrDefaultAsync(m => m.Id == id);
+            var todoitem = await _context.ToDoItems.FirstOrDefaultAsync(m => m.Id == id);
 
             if (todoitem == null)
             {
@@ -44,16 +44,16 @@ namespace NotesApp.Pages.ToDoItems
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.ToDoItem == null)
+            if (id == null || _context.ToDoItems == null)
             {
                 return NotFound();
             }
-            var todoitem = await _context.ToDoItem.FindAsync(id);
+            var todoitem = await _context.ToDoItems.FindAsync(id);
 
             if (todoitem != null)
             {
                 ToDoItem = todoitem;
-                _context.ToDoItem.Remove(ToDoItem);
+                _context.ToDoItems.Remove(ToDoItem);
                 await _context.SaveChangesAsync();
             }
 

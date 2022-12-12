@@ -7,8 +7,7 @@ namespace NotesApp.Data
     {
         public static void Initialize(NotesAppContext context)
         {
-            // Look for any students.
-            if (context.Note.Any())
+            if (context.ToDoNotes.Any())
             {
                 return;   // DB has been seeded
             }

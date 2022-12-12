@@ -27,12 +27,12 @@ namespace NotesApp.Pages.Notes
 
         public async Task<IActionResult> OnGetAsync(int? id, int? todoId, int? priorityOrder)
         {
-            if (id == null || _context.Note == null)
+            if (id == null || _context.ToDoNotes == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.Note
+            var note = await _context.ToDoNotes
                 .Include(c => c.ToDoList.OrderBy(x => x.PriorityOrder))
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -97,7 +97,7 @@ namespace NotesApp.Pages.Notes
 
         private bool NoteExists(int id)
         {
-            return _context.Note.Any(e => e.Id == id);
+            return _context.ToDoNotes.Any(e => e.Id == id);
         }
     }
 }

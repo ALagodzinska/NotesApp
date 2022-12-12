@@ -38,7 +38,7 @@ namespace NotesApp.Pages.Notes
             }
 
             Note.CreationDate = DateTime.Now.Date;
-            _context.Note.Add(Note);
+            _context.ToDoNotes.Add(Note);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/ToDoItems/Create", new { noteId = Note.Id.ToString() });

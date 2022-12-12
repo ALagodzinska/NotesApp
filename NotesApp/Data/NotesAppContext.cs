@@ -14,9 +14,9 @@ namespace NotesApp.Data
         {
         }
 
-        public DbSet<NotesApp.Models.ToDoItem> ToDoItem { get; set; } = default!;
+        public DbSet<NotesApp.Models.ToDoItem> ToDoItems { get; set; } = default!;
 
-        public DbSet<NotesApp.Models.ToDoNote> Note { get; set; }
+        public DbSet<NotesApp.Models.ToDoNote> ToDoNotes { get; set; }
 
     }
 }
