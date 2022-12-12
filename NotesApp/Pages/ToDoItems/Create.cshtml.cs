@@ -40,15 +40,21 @@ namespace NotesApp.Pages.ToDoItems
 
         [BindProperty]
         public ToDoItem ToDoItem { get; set; }
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+
+            var note = _context.Note
+                .Include(c => c.ToDoList)
+                .FirstOrDefault(n => n.Id == ToDoItem.NoteId);
+
+            ToDoItem.PriorityOrder = note.ToDoList.Count + 1;
 
             ToDoItem.CreationDate = DateTime.Now.Date;
             _context.ToDoItem.Add(ToDoItem);
