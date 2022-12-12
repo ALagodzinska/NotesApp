@@ -25,21 +25,38 @@ namespace NotesApp.Pages.Notes
         [BindProperty]
         public ToDoNote Note { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, int? todoId, int? priorityOrder)
         {
             if (id == null || _context.Note == null)
             {
                 return NotFound();
             }
 
-            var note =  await _context.Note
+            var note = await _context.Note
                 .Include(c => c.ToDoList.OrderBy(x => x.PriorityOrder))
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (note == null)
             {
                 return NotFound();
             }
+
+            if (todoId != null && priorityOrder != null)
+            {
+                var changedOrderItem = note.ToDoList.FirstOrDefault(i => i.Id == todoId);
+
+                note.ToDoList.FirstOrDefault(i => i.PriorityOrder == priorityOrder).PriorityOrder = changedOrderItem.PriorityOrder;
+                changedOrderItem.PriorityOrder = priorityOrder.Value;
+
+                Note = note;
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("/Notes/Edit", new {id = id});
+            }
+
             Note = note;
+
             return Page();
         }
 
@@ -80,7 +97,7 @@ namespace NotesApp.Pages.Notes
 
         private bool NoteExists(int id)
         {
-          return _context.Note.Any(e => e.Id == id);
+            return _context.Note.Any(e => e.Id == id);
         }
     }
 }

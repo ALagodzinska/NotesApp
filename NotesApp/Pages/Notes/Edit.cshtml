@@ -55,15 +55,17 @@
 
                                 @if (toDoItem.PriorityOrder == 1)
                                 {
-                                    <i class="fa-solid fa-angle-down"></i>
+                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
                                 }
                                 else if (toDoItem.PriorityOrder == Model.Note.ToDoList.Count)
                                 {
-                                    <i class="fa-solid fa-angle-up"></i>
+                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
                                 }
                                 else
                                 {
-                                <i class="fa-solid fa-angle-up"></i> <i class="fa-solid fa-angle-down"></i>
+                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
+
+                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
                                 }
                                                                
                             </td>
