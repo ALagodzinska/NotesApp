@@ -25,9 +25,9 @@ namespace NotesApp.Pages.Notes
         {
             if (_context.Note != null)
             {
-                Notes = await _context.Note.
-                    Include(i => i.ToDoList).
-                    ToListAsync();
+                Notes = await _context.Note
+                    .Include(c => c.ToDoList.OrderBy(x => x.PriorityOrder))
+                    .ToListAsync();
             }
         }
     }

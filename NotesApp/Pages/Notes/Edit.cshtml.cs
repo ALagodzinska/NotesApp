@@ -33,7 +33,8 @@ namespace NotesApp.Pages.Notes
             }
 
             var note =  await _context.Note
-                .Include(c => c.ToDoList).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(c => c.ToDoList.OrderBy(x => x.PriorityOrder))
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (note == null)
             {
                 return NotFound();
