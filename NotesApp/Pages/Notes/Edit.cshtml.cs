@@ -64,6 +64,12 @@ namespace NotesApp.Pages.Notes
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            if(String.IsNullOrEmpty(Note.TextContent) && Note.Type == Models.Type.TextNote)
+            {
+                ViewData["TextAreaError"] = "Text area field is required!";
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -71,10 +77,13 @@ namespace NotesApp.Pages.Notes
 
             _context.Attach(Note).State = EntityState.Modified;
 
-            foreach (var todo in Note.ToDoList)
+            if(Note.Type == Models.Type.ToDoList)
             {
-                _context.Attach(todo).State = EntityState.Modified;
-            }
+                foreach (var todo in Note.ToDoList)
+                {
+                    _context.Attach(todo).State = EntityState.Modified;
+                }
+            }           
 
             try
             {
