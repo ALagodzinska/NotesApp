@@ -22,12 +22,12 @@ namespace NotesApp.Pages.ToDoItems
 
         public async Task<IActionResult> OnGetAsync(int? noteId)
         {
-            if (noteId == null || _context.ToDoNotes == null)
+            if (noteId == null || _context.Notes == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.ToDoNotes.FirstOrDefaultAsync(m => m.Id == noteId);
+            var note = await _context.Notes.FirstOrDefaultAsync(m => m.Id == noteId);
             if (note == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace NotesApp.Pages.ToDoItems
                 return Page();
             }
 
-            var note = _context.ToDoNotes
+            var note = _context.Notes
                 .Include(c => c.ToDoList)
                 .FirstOrDefault(n => n.Id == ToDoItem.NoteId);
 
@@ -60,7 +60,7 @@ namespace NotesApp.Pages.ToDoItems
             _context.ToDoItems.Add(ToDoItem);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/ToDoNotes/Edit", new { id = ToDoItem.NoteId.ToString() });
+            return RedirectToPage("/Notes/Edit", new { id = ToDoItem.NoteId.ToString() });
         }
     }
 }

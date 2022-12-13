@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
 
-namespace NotesApp.Pages.ToDoNotes
+namespace NotesApp.Pages.Notes
 {
     public class DeleteModel : PageModel
     {
@@ -20,16 +20,16 @@ namespace NotesApp.Pages.ToDoNotes
         }
 
         [BindProperty]
-        public ToDoNote Note { get; set; }
+        public Note Note { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.ToDoNotes == null)
+            if (id == null || _context.Notes == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.ToDoNotes.FirstOrDefaultAsync(m => m.Id == id);
+            var note = await _context.Notes.FirstOrDefaultAsync(m => m.Id == id);
 
             if (note == null)
             {
@@ -44,16 +44,16 @@ namespace NotesApp.Pages.ToDoNotes
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.ToDoNotes == null)
+            if (id == null || _context.Notes == null)
             {
                 return NotFound();
             }
-            var note = await _context.ToDoNotes.FindAsync(id);
+            var note = await _context.Notes.FindAsync(id);
 
             if (note != null)
             {
                 Note = note;
-                _context.ToDoNotes.Remove(Note);
+                _context.Notes.Remove(Note);
                 await _context.SaveChangesAsync();
             }
 

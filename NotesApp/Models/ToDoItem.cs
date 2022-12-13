@@ -21,6 +21,6 @@ namespace NotesApp.Models
         public int PriorityOrder { get; set; }
 
         public int NoteId { get; set; }
-        public ToDoNote Note { get; set; }
+        public Note Note { get; set; }
     }
 }

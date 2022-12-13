@@ -11,7 +11,7 @@ using NotesApp.Data;
 using NotesApp.Models;
 using NuGet.Protocol;
 
-namespace NotesApp.Pages.ToDoNotes
+namespace NotesApp.Pages.Notes
 {
     public class EditModel : PageModel
     {
@@ -23,16 +23,16 @@ namespace NotesApp.Pages.ToDoNotes
         }
 
         [BindProperty]
-        public ToDoNote Note { get; set; } = default!;
+        public Note Note { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id, int? todoId, int? priorityOrder)
         {
-            if (id == null || _context.ToDoNotes == null)
+            if (id == null || _context.Notes == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.ToDoNotes
+            var note = await _context.Notes
                 .Include(c => c.ToDoList.OrderBy(x => x.PriorityOrder))
                 .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -52,7 +52,7 @@ namespace NotesApp.Pages.ToDoNotes
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("/ToDoNotes/Edit", new { id });
+                return RedirectToPage("/Notes/Edit", new { id });
             }
 
             Note = note;
@@ -97,7 +97,7 @@ namespace NotesApp.Pages.ToDoNotes
 
         private bool NoteExists(int id)
         {
-            return _context.ToDoNotes.Any(e => e.Id == id);
+            return _context.Notes.Any(e => e.Id == id);
         }
     }
 }

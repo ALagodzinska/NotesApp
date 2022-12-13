@@ -8,8 +8,7 @@
 <h1>List of Notes</h1>
 
 <p>
-    <a asp-page="/ToDoNotes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i> Create New ToDo List</a>
-    <a asp-page="/TextNotes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i> Create New Text Note</a>
+    <a asp-page="/Notes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i>Add New Note</a>
 </p>
 
 <form asp-page="./Index" method="get">
@@ -33,17 +32,24 @@
                         <div class="card-body">
                             <h5 class="card-title">@note.Title</h5>
                             <p class="card-text">
-                                @foreach (var todo in note.ToDoList)
+                                @if (note.Type == Models.Type.ToDoList)
                                 {
-                                @Html.DisplayFor(todoItem => todo.IsDone)
-                                @todo.Content 
-                                <br />
+                                    @foreach (var todo in note.ToDoList)
+                                    {
+                                        @Html.DisplayFor(todoItem => todo.IsDone)
+                                        @todo.Content
+                                        <br />
+                                    }
+                                }
+                                else
+                                {
+                                    @note.TextContent
                                 }
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">                                    
-                                    <a asp-page="/ToDoNotes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <a asp-page="/ToDoNotes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                <div class="btn-group">
+                                    <a asp-page="/Notes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-page="/Notes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
                                 </div>
                                 <small class="text-muted">@note.CreationDate.ToString("dd/MM/yyyy")</small>
                             </div>

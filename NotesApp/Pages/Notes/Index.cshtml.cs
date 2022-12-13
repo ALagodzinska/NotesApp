@@ -24,11 +24,11 @@ namespace NotesApp.Pages.Notes
         }
 
         public string CurrentFilter { get; set; }
-        public PaginatedList<ToDoNote> Notes { get; set; } = default!;
+        public PaginatedList<Note> Notes { get; set; } = default!;
 
         public async Task OnGetAsync(string searchString, int? pageIndex)
         {
-            if (_context.ToDoNotes != null)
+            if (_context.Notes != null)
             {
                 if (searchString != null)
                 {
@@ -37,8 +37,8 @@ namespace NotesApp.Pages.Notes
 
                 CurrentFilter = searchString;
 
-                IQueryable<ToDoNote> filteredList = from note in _context.ToDoNotes
-                                                 select note;
+                IQueryable<Note> filteredList = from note in _context.Notes
+                                                    select note;
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -47,9 +47,9 @@ namespace NotesApp.Pages.Notes
                 }
 
                 var pageSize = Configuration.GetValue("PageSize", 6);
-                Notes = await PaginatedList<ToDoNote>
+                Notes = await PaginatedList<Note>
                     .CreateAsync(
-                    filteredList.Include(n => n.ToDoList.OrderBy(n=>n.PriorityOrder)), pageIndex ?? 1, pageSize);
+                    filteredList.Include(n => n.ToDoList.OrderBy(n => n.PriorityOrder)), pageIndex ?? 1, pageSize);
             }
         }
     }
