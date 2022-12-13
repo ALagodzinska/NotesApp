@@ -26,15 +26,17 @@ namespace NotesApp.Pages.TextNotes
 
         [BindProperty]
         public TextNote TextNote { get; set; }
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+
+            TextNote.CreationDate = DateTime.Now.Date;
 
             _context.TextNotes.Add(TextNote);
             await _context.SaveChangesAsync();

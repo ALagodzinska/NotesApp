@@ -12,6 +12,7 @@ namespace NotesApp.Models
         [DataType(DataType.Date)]
         [Display(Name = "Date of creation")]
         public DateTime CreationDate { get; set; }
+        [Required]
         [Display(Name = "Text")]
         [StringLength(10000, MinimumLength = 1)]
         public string TextContent { get; set; }

@@ -18,14 +18,10 @@
                 <input asp-for="TextNote.Title" class="form-control" />
                 <span asp-validation-for="TextNote.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TextNote.CreationDate" class="control-label"></label>
-                <input asp-for="TextNote.CreationDate" class="form-control" />
-                <span asp-validation-for="TextNote.CreationDate" class="text-danger"></span>
-            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="TextNote.TextContent" class="control-label"></label>
-                <input asp-for="TextNote.TextContent" class="form-control" />
+                <textarea rows="6" cols="60" asp-for="TextNote.TextContent" id="textArea" placeholder="Enter your text here..."></textarea>
                 <span asp-validation-for="TextNote.TextContent" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,5 +36,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
