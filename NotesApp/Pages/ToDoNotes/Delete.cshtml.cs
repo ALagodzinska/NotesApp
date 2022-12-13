@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
 
-namespace NotesApp.Pages.Notes
+namespace NotesApp.Pages.ToDoNotes
 {
     public class DeleteModel : PageModel
     {
-        private readonly NotesApp.Data.NotesAppContext _context;
+        private readonly NotesAppContext _context;
 
-        public DeleteModel(NotesApp.Data.NotesAppContext context)
+        public DeleteModel(NotesAppContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-      public ToDoNote Note { get; set; }
+        public ToDoNote Note { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,7 +35,7 @@ namespace NotesApp.Pages.Notes
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Note = note;
             }
@@ -57,7 +57,7 @@ namespace NotesApp.Pages.Notes
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Notes/Index");
         }
     }
 }

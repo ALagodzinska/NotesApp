@@ -49,7 +49,7 @@ namespace NotesApp.Pages.Notes
                 var pageSize = Configuration.GetValue("PageSize", 6);
                 Notes = await PaginatedList<ToDoNote>
                     .CreateAsync(
-                    filteredList.Include(n => n.ToDoList), pageIndex ?? 1, pageSize);
+                    filteredList.Include(n => n.ToDoList.OrderBy(n=>n.PriorityOrder)), pageIndex ?? 1, pageSize);
             }
         }
     }

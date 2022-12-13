@@ -57,7 +57,7 @@ namespace NotesApp.Pages.TextNotes
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Notes/Index");
         }
     }
 }

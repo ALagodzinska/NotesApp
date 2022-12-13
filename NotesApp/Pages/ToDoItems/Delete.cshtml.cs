@@ -57,7 +57,7 @@ namespace NotesApp.Pages.ToDoItems
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Notes/Edit", new { Id = todoitem.NoteId.ToString() });
+            return RedirectToPage("/ToDoNotes/Edit", new { Id = todoitem.NoteId.ToString() });
         }
     }
 }

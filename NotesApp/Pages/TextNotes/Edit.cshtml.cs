@@ -66,7 +66,7 @@ namespace NotesApp.Pages.TextNotes
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Notes/Index");
         }
 
         private bool TextNoteExists(int id)

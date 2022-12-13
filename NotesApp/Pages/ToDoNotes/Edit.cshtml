@@ -1,5 +1,5 @@
 ﻿@page
-@model NotesApp.Pages.Notes.EditModel
+@model NotesApp.Pages.ToDoNotes.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -56,17 +56,17 @@
 
                                 @if (toDoItem.PriorityOrder == 1)
                                 {
-                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
+                                    <a asp-page="/ToDoNotes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
                                 }
                                 else if (toDoItem.PriorityOrder == Model.Note.ToDoList.Count)
                                 {
-                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
+                                    <a asp-page="/ToDoNotes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
                                 }
                                 else
                                 {
-                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
+                                    <a asp-page="/ToDoNotes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
 
-                                    <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
+                                    <a asp-page="/ToDoNotes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
                                 }
                                                                
                             </td>
@@ -85,7 +85,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="/Notes/Index">Back to List</a>
 </div>
 
 @section Scripts {

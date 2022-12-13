@@ -11,13 +11,13 @@ using NotesApp.Data;
 using NotesApp.Models;
 using NuGet.Protocol;
 
-namespace NotesApp.Pages.Notes
+namespace NotesApp.Pages.ToDoNotes
 {
     public class EditModel : PageModel
     {
-        private readonly NotesApp.Data.NotesAppContext _context;
+        private readonly NotesAppContext _context;
 
-        public EditModel(NotesApp.Data.NotesAppContext context)
+        public EditModel(NotesAppContext context)
         {
             _context = context;
         }
@@ -52,7 +52,7 @@ namespace NotesApp.Pages.Notes
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("/Notes/Edit", new {id = id});
+                return RedirectToPage("/ToDoNotes/Edit", new { id });
             }
 
             Note = note;
