@@ -1,0 +1,45 @@
+﻿@page
+@model NotesApp.Pages.TextNotes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>TextNote</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TextNote.Id" />
+            <div class="form-group">
+                <label asp-for="TextNote.Title" class="control-label"></label>
+                <input asp-for="TextNote.Title" class="form-control" />
+                <span asp-validation-for="TextNote.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TextNote.CreationDate" class="control-label"></label>
+                <input asp-for="TextNote.CreationDate" class="form-control" />
+                <span asp-validation-for="TextNote.CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TextNote.TextContent" class="control-label"></label>
+                <input asp-for="TextNote.TextContent" class="form-control" />
+                <span asp-validation-for="TextNote.TextContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

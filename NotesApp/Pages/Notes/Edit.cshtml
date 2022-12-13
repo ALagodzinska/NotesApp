@@ -25,7 +25,8 @@
             <br />
 
             <h3>To Do List</h3>
-            <a asp-page="/ToDoItems/Create" asp-route-noteId="@Model.Note?.Id" class="btn btn-secondary">Add new task</a>
+            <a asp-page="/ToDoItems/Create" asp-route-noteId="@Model.Note?.Id" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i> Add New Task</a>
+            
             <table class="table">
                 <thead class="thead-dark">
                     <tr>

@@ -18,5 +18,7 @@ namespace NotesApp.Data
 
         public DbSet<NotesApp.Models.ToDoNote> ToDoNotes { get; set; }
 
+        public DbSet<NotesApp.Models.TextNote> TextNotes { get; set; }
+
     }
 }
