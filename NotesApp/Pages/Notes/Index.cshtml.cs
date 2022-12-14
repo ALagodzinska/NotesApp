@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
 
 namespace NotesApp.Pages.Notes
 {
@@ -23,19 +24,25 @@ namespace NotesApp.Pages.Notes
             Configuration = configuration;
         }
 
+        public string CurrentSort { get; set; }
         public string CurrentFilter { get; set; }
+        public string TypeSort { get; set; }
         public PaginatedList<Note> Notes { get; set; } = default!;
 
-        public async Task OnGetAsync(string searchString, int? pageIndex)
+        public async Task OnGetAsync(string searchString, string sortByType, int? pageIndex)
         {
             if (_context.Notes != null)
             {
+                CurrentSort = sortByType;
+
                 if (searchString != null)
                 {
                     pageIndex = 1;
                 }
 
                 CurrentFilter = searchString;
+
+                TypeSort = sortByType == "todo_type" ? "text_type" : "todo_type";
 
                 IQueryable<Note> filteredList = from note in _context.Notes
                                                     select note;
@@ -46,10 +53,20 @@ namespace NotesApp.Pages.Notes
                     filteredList = filteredList.OrderBy(n => n.Title);
                 }
 
+                if(sortByType == "text_type")
+                {
+                    filteredList = filteredList.Where(n => n.Type == Models.Type.TextNote);
+                }
+                else if (sortByType == "todo_type")
+                {
+                    filteredList = filteredList.Where(n => n.Type == Models.Type.ToDoList);
+                }
+
                 var pageSize = Configuration.GetValue("PageSize", 6);
                 Notes = await PaginatedList<Note>
                     .CreateAsync(
-                    filteredList.Include(n => n.ToDoList.OrderBy(n => n.PriorityOrder)), pageIndex ?? 1, pageSize);
+                    filteredList.Include(n => n.ToDoList.OrderBy(n => n.PriorityOrder)).OrderByDescending(n=> n.CreationDate)
+                    , pageIndex ?? 1, pageSize);
             }
         }
     }

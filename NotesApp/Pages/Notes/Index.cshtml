@@ -22,6 +22,20 @@
     </div>
 </form>
 
+<a asp-page="./Index" asp-route-sortByType="@Model.TypeSort"
+   asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
+    Sort by type:
+    @if (Model.TypeSort == "text_type")
+    {
+        <text>Text Notes</text>        
+    }
+    else if (Model.TypeSort == "todo_type")
+    {
+        <text>ToDo Lists</text>
+    }
+</a>
+<br />
+
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row">
@@ -67,12 +81,16 @@
 }
 
 <a asp-page="./Index"
+   asp-route-sortByType="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.Notes.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
    class="btn btn-primary @prevDisabled">
     Previous
 </a>
 <a asp-page="./Index"
+   asp-route-sortByType="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.Notes.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
    class="btn btn-primary @nextDisabled">
     Next
 </a>
