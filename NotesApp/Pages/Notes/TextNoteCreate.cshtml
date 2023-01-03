@@ -1,0 +1,39 @@
+﻿@page
+@model NotesApp.Pages.Notes.TextNoteCreateModel
+@{
+}
+@{
+    ViewData["Title"] = "Add Text Note";
+}
+
+<h1>@Model.Note.Title</h1>
+
+<h2>Add text to note</h2>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Note.Id" />
+            <input type="hidden" asp-for="Note.CreationDate" />
+            <input type="hidden" asp-for="Note.Title" />
+            <input type="hidden" asp-for="Note.Type" />
+            <div class="form-floating">
+                <textarea asp-for="Note.TextContent" class="form-control" placeholder="Input your text here..." id="floatingTextarea2" style="height: 15em"></textarea>
+                <label for="floatingTextarea2">Text Note</label>
+                <span class="text-danger">@ViewData["TextAreaError"]</span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

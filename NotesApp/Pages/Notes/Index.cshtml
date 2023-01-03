@@ -1,0 +1,96 @@
+﻿@page "/"
+@model NotesApp.Pages.Notes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of Notes</h1>
+
+<p>
+    <a asp-page="/Notes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i>Add New Note</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by title:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<a asp-page="./Index" asp-route-sortByType="@Model.TypeSort"
+   asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
+    Sort by type:
+    @if (Model.TypeSort == "text_type")
+    {
+        <text>Text Notes</text>        
+    }
+    else if (Model.TypeSort == "todo_type")
+    {
+        <text>ToDo Lists</text>
+    }
+</a>
+<br />
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var note in Model.Notes)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">@note.Title</h5>
+                            <p class="card-text">
+                                @if (note.Type == Models.Type.ToDoList)
+                                {
+                                    @foreach (var todo in note.ToDoList)
+                                    {
+                                        @Html.DisplayFor(todoItem => todo.IsDone)
+                                        @todo.Content
+                                        <br />
+                                    }
+                                }
+                                else
+                                {
+                                    @note.TextContent
+                                }
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-page="/Notes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <a asp-page="/Notes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                </div>
+                                <small class="text-muted">@note.CreationDate.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@{
+    var prevDisabled = !Model.Notes.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Notes.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortByType="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Notes.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortByType="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Notes.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

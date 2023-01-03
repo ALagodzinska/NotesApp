@@ -1,0 +1,105 @@
+﻿@page
+@model NotesApp.Pages.Notes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    int orderNumber = 1;
+}
+
+<h1>Edit</h1>
+
+<h2>Edit note - @Model.Note.Title</h2>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Note.Id" />
+            <input type="hidden" asp-for="Note.CreationDate" />
+            <input type="hidden" asp-for="Note.Type" />
+            <div class="form-group">
+                <label asp-for="Note.Title" class="control-label"><h3>Note Title</h3></label>
+                <input asp-for="Note.Title" class="form-control" />
+                <span asp-validation-for="Note.Title" class="text-danger"></span>
+            </div>
+            <br />
+            @if (Model.Note.Type == Models.Type.TextNote)
+            {
+                <div class="form-floating">
+                    <textarea asp-for="Note.TextContent" class="form-control" placeholder="Input your text here..." id="floatingTextarea2" style="height: 15em"></textarea>
+                    <label for="floatingTextarea2">Text Note</label>
+                    <span class="text-danger">@ViewData["TextAreaError"]</span>
+                </div>
+            }
+            else if (Model.Note.Type == Models.Type.ToDoList)
+            {
+                <h3>To Do List</h3>
+                <a asp-page="/ToDoItems/Create" asp-route-noteId="@Model.Note?.Id" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i> Add New Task</a>
+
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Task</th>
+                            <th scope="col">Is Done</th>
+                            <th scope="col">Change Order</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var toDoItem in Model.Note.ToDoList)
+                        {
+                            <input type="hidden" name="Note.ToDoList.Index" value="@toDoItem.Id" />
+                            <input type="hidden" name="Note.ToDoList[@toDoItem.Id].Id" value="@toDoItem.Id" />
+                            <input type="hidden" name="Note.ToDoList[@toDoItem.Id].NoteId" value="@toDoItem.NoteId" />
+                            <input type="hidden" name="Note.ToDoList[@toDoItem.Id].CreationDate" value="@toDoItem.CreationDate" />
+
+                            <tr>
+                                <th scope="row">@(orderNumber++)</th>
+                                <td><input type="text" name="Note.ToDoList[@toDoItem.Id].Content" value="@toDoItem.Content" /></td>
+                                <td><input class="form-check-input" name="Note.ToDoList[@toDoItem.Id].IsDone" type="checkbox" value="true" @(toDoItem.IsDone ? "checked" : "") /></td>
+
+                                <td>
+                                    <input type="hidden" name="Note.ToDoList[@toDoItem.Id].PriorityOrder" value="@toDoItem.PriorityOrder" />
+
+                                    @if (toDoItem.PriorityOrder == 1)
+                                    {
+                                        <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
+                                    }
+                                    else if (toDoItem.PriorityOrder == Model.Note.ToDoList.Count)
+                                    {
+                                        <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder-1)"><i class="fa-solid fa-angle-up"></i></a>
+
+                                        <a asp-page="/Notes/Edit" asp-route-id="@Model.Note.Id" asp-route-todoId="@toDoItem.Id" asp-route-priorityOrder="@(toDoItem.PriorityOrder+1)"><i class="fa-solid fa-angle-down"></i></a>
+                                    }
+
+                                </td>
+
+                                <td><a asp-page="/ToDoItems/Delete" asp-route-Id="@toDoItem.Id"><i class="fa-solid fa-trash-can"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="/Notes/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#CheckBoxForToDO {
+    width: 2em;
+    height: 2.5em;
+    vertical-align: unset;
+    margin-top: 0em;
+}
