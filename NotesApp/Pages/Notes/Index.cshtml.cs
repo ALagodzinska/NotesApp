@@ -10,9 +10,11 @@ using NotesApp.Data;
 using NotesApp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly NotesApp.Data.NotesAppContext _context;
