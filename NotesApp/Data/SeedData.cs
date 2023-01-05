@@ -18,6 +18,7 @@ namespace NotesApp.Data
                 {
                     Title = "Eiffel Tower",
                     CreationDate = DateTime.Parse("2022-09-01"),
+                    Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
                     TextContent = "The Eiffel Tower can be 15 cm taller during the summer, " +
                     "due to thermal expansion meaning the iron heats up, " +
@@ -28,6 +29,7 @@ namespace NotesApp.Data
                 {
                     Title = "Spanish national anthem",
                     CreationDate = DateTime.Parse("2022-09-01"),
+                    Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
                     TextContent = "The Spanish national anthem has no words. " +
                     "The 'Marcha Real' is one of only four national anthems in the world " +
@@ -39,6 +41,7 @@ namespace NotesApp.Data
                 {
                     Title = "Kit Kat in Japan",
                     CreationDate = DateTime.Parse("2022-09-01"),
+                    Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
                     TextContent = "Japan has over 200 flavours of Kit Kats. " +
                     "They're exclusively created for different regions, cities, and seasons. " +
@@ -52,6 +55,7 @@ namespace NotesApp.Data
             {
                 Title = "Shop List",
                 CreationDate = DateTime.Parse("2022-09-01"),
+                Username = "admin@notes.com",
                 Type = Models.Type.ToDoList
             };
 
@@ -59,6 +63,7 @@ namespace NotesApp.Data
             {
                 Title = "Training",
                 CreationDate = DateTime.Parse("2022-10-01"),
+                Username = "admin@notes.com",
                 Type = Models.Type.ToDoList
             };
 
@@ -66,6 +71,7 @@ namespace NotesApp.Data
             {
                 Title = "Work Tasks",
                 CreationDate = DateTime.Parse("2022-09-06"),
+                Username = "admin@notes.com",
                 Type = Models.Type.ToDoList
             };
 

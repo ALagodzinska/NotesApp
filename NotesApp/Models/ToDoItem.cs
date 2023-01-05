@@ -14,7 +14,7 @@ namespace NotesApp.Models
         [Display(Name = "Done")]
         public bool IsDone { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Date of creation")]
         public DateTime CreationDate { get; set; }
 

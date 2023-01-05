@@ -47,6 +47,7 @@ namespace NotesApp.Pages.Notes
                 TypeSort = sortByType == "todo_type" ? "text_type" : "todo_type";
 
                 IQueryable<Note> filteredList = from note in _context.Notes
+                                                where note.Username == User.Identity.Name
                                                     select note;
 
                 if (!String.IsNullOrEmpty(searchString))

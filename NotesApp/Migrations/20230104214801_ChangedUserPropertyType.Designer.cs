@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotesApp.Data;
 
@@ -11,9 +12,10 @@ using NotesApp.Data;
 namespace NotesApp.Migrations
 {
     [DbContext(typeof(NotesAppContext))]
-    partial class NotesAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230104214801_ChangedUserPropertyType")]
+    partial class ChangedUserPropertyType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,7 +250,6 @@ namespace NotesApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

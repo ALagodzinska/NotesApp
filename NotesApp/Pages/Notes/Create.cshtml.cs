@@ -39,7 +39,7 @@ namespace NotesApp.Pages.Notes
                 return Page();
             }
 
-            Note.CreationDate = DateTime.Now.Date;
+            Note.CreationDate = DateTime.Now;
             _context.Notes.Add(Note);
             await _context.SaveChangesAsync();
 

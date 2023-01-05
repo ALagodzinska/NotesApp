@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace NotesApp.Models
@@ -16,7 +17,10 @@ namespace NotesApp.Models
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }
 
-        [DataType(DataType.Date)]
+        [Required]
+        public string Username { get; set; }
+
+        [DataType(DataType.DateTime)]
         [Display(Name = "Date of creation")]
         public DateTime CreationDate { get; set; }
 
