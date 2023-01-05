@@ -14,7 +14,9 @@ builder.Services.AddDbContext<NotesAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NotesAppContext") ?? throw new InvalidOperationException("Connection string 'NotesAppContext' not found.")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<NotesAppContext>();
+
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);

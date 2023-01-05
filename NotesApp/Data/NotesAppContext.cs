@@ -15,6 +15,13 @@ namespace NotesApp.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            SeedData.SeedUsers(builder);
+
+            base.OnModelCreating(builder);            
+        }
+
         public DbSet<ToDoItem> ToDoItems { get; set; } = default!;
 
         public DbSet<Note> Notes { get; set; } = default!;

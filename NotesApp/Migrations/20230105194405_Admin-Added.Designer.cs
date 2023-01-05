@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NotesApp.Data;
 
@@ -11,9 +12,10 @@ using NotesApp.Data;
 namespace NotesApp.Migrations
 {
     [DbContext(typeof(NotesAppContext))]
-    partial class NotesAppContextModelSnapshot : ModelSnapshot
+    [Migration("20230105194405_Admin-Added")]
+    partial class AdminAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
