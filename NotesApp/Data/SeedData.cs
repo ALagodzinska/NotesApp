@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Models;
 
@@ -57,6 +58,8 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-01"),
                     Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
+                    Color = Color.Blue,
+                    ColorClass = "text-white bg-primary",
                     TextContent = "The Eiffel Tower can be 15 cm taller during the summer, " +
                     "due to thermal expansion meaning the iron heats up, " +
                     "the particles gain kinetic energy and take up more space."
@@ -68,6 +71,8 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-01"),
                     Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
+                    Color = Color.White,
+                    ColorClass = "",
                     TextContent = "The Spanish national anthem has no words. " +
                     "The 'Marcha Real' is one of only four national anthems in the world " +
                     "(along with those of Bosnia and Herzegovina, Kosovo, and San Marino) " +
@@ -80,6 +85,8 @@ namespace NotesApp.Data
                     CreationDate = DateTime.Parse("2022-09-01"),
                     Username = "admin@notes.com",
                     Type = Models.Type.TextNote,
+                    Color = Color.White,
+                    ColorClass = "",
                     TextContent = "Japan has over 200 flavours of Kit Kats. " +
                     "They're exclusively created for different regions, cities, and seasons. " +
                     "There are some tasty-sounding ones like banana, blueberry cheesecake and Oreo ice cream, " +
@@ -93,7 +100,9 @@ namespace NotesApp.Data
                 Title = "Shop List",
                 CreationDate = DateTime.Parse("2022-09-01"),
                 Username = "admin@notes.com",
-                Type = Models.Type.ToDoList
+                Type = Models.Type.ToDoList,
+                Color = Color.Red,
+                ColorClass = "text-white bg-danger",
             };
 
             var secondToDoNote = new Note
@@ -101,7 +110,9 @@ namespace NotesApp.Data
                 Title = "Training",
                 CreationDate = DateTime.Parse("2022-10-01"),
                 Username = "admin@notes.com",
-                Type = Models.Type.ToDoList
+                Type = Models.Type.ToDoList,
+                Color = Color.Blue,
+                ColorClass = "text-white bg-primary",
             };
 
             var thirdToDoNote = new Note
@@ -109,7 +120,9 @@ namespace NotesApp.Data
                 Title = "Work Tasks",
                 CreationDate = DateTime.Parse("2022-09-06"),
                 Username = "admin@notes.com",
-                Type = Models.Type.ToDoList
+                Type = Models.Type.ToDoList,
+                Color = Color.White,
+                ColorClass = "",
             };
 
             var toDoItems = new ToDoItem[]

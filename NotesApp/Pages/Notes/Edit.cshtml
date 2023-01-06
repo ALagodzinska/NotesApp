@@ -25,6 +25,17 @@
                 <span asp-validation-for="Note.Title" class="text-danger"></span>
             </div>
             <br />
+
+            <label asp-for="Note.Color" class="control-label"></label>
+            <select class="form-control form-control-sm" asp-for="Note.Color">
+                <option value="" selected disabled>Please select note color</option>
+                @foreach (var name in Enum.GetValues(typeof(Models.Color)))
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+
+            <br />
             @if (Model.Note.Type == Models.Type.TextNote)
             {
                 <div class="form-floating">

@@ -40,7 +40,9 @@ namespace NotesApp.Pages.Notes
             }
 
             Note.CreationDate = DateTime.Now;
+            Note.ColorClass = Note.GetColorClass(Note.Color);
             _context.Notes.Add(Note);
+
             await _context.SaveChangesAsync();
 
             if(Note.Type == Models.Type.ToDoList)

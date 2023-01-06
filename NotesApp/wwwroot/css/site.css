@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 #CheckBoxForToDO {
@@ -22,4 +22,23 @@ body {
     height: 2.5em;
     vertical-align: unset;
     margin-top: 0em;
+}
+
+.expand-button{
+    margin-top: .25em;
+    margin-bottom: 1em;
+    color: black;    
+}
+
+.cutoff-text{
+    height: 6em;
+    overflow: hidden;
+}
+
+.card-body.showContent p{
+    height: auto;
+}
+
+.card-body.showContent button.expand-button {
+    background-color: gray;
 }

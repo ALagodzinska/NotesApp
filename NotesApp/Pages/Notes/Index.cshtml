@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    string textColor = "";
 }
 
 <h1>List of Notes</h1>
@@ -27,7 +28,7 @@
     Sort by type:
     @if (Model.TypeSort == "text_type")
     {
-        <text>Text Notes</text>        
+        <text>Text Notes</text>
     }
     else if (Model.TypeSort == "todo_type")
     {
@@ -42,10 +43,10 @@
             @foreach (var note in Model.Notes)
             {
                 <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
+                    <div class="card mb-4 box-shadow @note.ColorClass one-note-di">
                         <div class="card-body">
                             <h5 class="card-title">@note.Title</h5>
-                            <p class="card-text">
+                            <p class="card-text cutoff-text">
                                 @if (note.Type == Models.Type.ToDoList)
                                 {
                                     @foreach (var todo in note.ToDoList)
@@ -60,12 +61,18 @@
                                     @note.TextContent
                                 }
                             </p>
+                            <button class="expand-button btn btn-outline-secondary btn-sm">Read More</button>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
+                                @if (note.ColorClass != null)
+                                {
+                                    textColor = note.ColorClass.Contains("text-white") ? "text-light" : "text-muted";
+                                }
+                                <div class="btn-group btn-light btn-outline-light">
                                     <a asp-page="/Notes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     <a asp-page="/Notes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                    <a asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Share</a>
                                 </div>
-                                <small class="text-muted">@note.CreationDate.ToString("dd/MM/yyyy h:mm tt")</small>
+                                <small class=@textColor>@note.CreationDate.ToString("dd/MM/yyyy h:mm tt")</small>
                             </div>
                         </div>
                     </div>

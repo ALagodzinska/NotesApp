@@ -79,7 +79,9 @@ namespace NotesApp.Pages.Notes
 
             _context.Attach(Note).State = EntityState.Modified;
 
-            if(Note.Type == Models.Type.ToDoList)
+            Note.ColorClass = Note.GetColorClass(Note.Color);
+
+            if (Note.Type == Models.Type.ToDoList)
             {
                 foreach (var todo in Note.ToDoList)
                 {
