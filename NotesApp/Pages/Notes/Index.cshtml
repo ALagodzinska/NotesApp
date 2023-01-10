@@ -5,11 +5,13 @@
     ViewData["Title"] = "Index";
     string textColor = "";
     var isShared = TempData["SuccesflyShared"];
+    var isAddedSharedNote = TempData["AddedShareNote"];
 }
 
 <h1>List of Notes</h1>
 
 <p style="color:green;">@isShared</p>
+<p style="color:green;">@isAddedSharedNote</p>
 
 <p>
     <a asp-page="/Notes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i>Add New Note</a>
@@ -70,12 +72,19 @@
                                 {
                                     textColor = note.ColorClass.Contains("text-white") ? "text-light" : "text-muted";
                                 }
+                                @if(@note.Username != @User.Identity.Name)
+                                {
+                                    <small class=@textColor>Created by @note.Username</small>
+                                }
+                                else
+                                {
                                 <div class="btn-group btn-light btn-outline-light">
                                     <a asp-page="/Notes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     <a asp-page="/Notes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
                                     <a asp-page="/Notes/Share" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary share-btn"><span>Share</span></a>
                                 </div>
                                 <small class=@textColor>@note.CreationDate.ToString("dd/MM/yyyy h:mm tt")</small>
+                                }
                             </div>
                         </div>
                     </div>

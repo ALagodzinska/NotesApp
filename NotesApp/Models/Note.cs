@@ -55,6 +55,8 @@ namespace NotesApp.Models
         [StringLength(10000, MinimumLength = 1)]
         public string TextContent { get; set; }
 
+        public List<SharedUser> SharedWithUsers { get; set; } = new List<SharedUser>();
+
         public string GetColorClass(Color color)
         {
             string colorClass = "";

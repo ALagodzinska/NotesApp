@@ -10,7 +10,7 @@ namespace NotesApp.Data
 {
     public class NotesAppContext : IdentityDbContext
     {
-        public NotesAppContext (DbContextOptions<NotesAppContext> options)
+        public NotesAppContext(DbContextOptions<NotesAppContext> options)
             : base(options)
         {
         }
@@ -19,11 +19,13 @@ namespace NotesApp.Data
         {
             SeedData.SeedUsers(builder);
 
-            base.OnModelCreating(builder);            
+            base.OnModelCreating(builder);
         }
 
         public DbSet<ToDoItem> ToDoItems { get; set; } = default!;
 
         public DbSet<Note> Notes { get; set; } = default!;
+
+        public DbSet<SharedUser> SharedUsers { get; set;} = default!;
     }
 }
