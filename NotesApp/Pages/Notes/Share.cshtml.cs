@@ -1,19 +1,25 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
 using System.Net;
+using System.Text.Encodings.Web;
+using WebPWrecover.Services;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class ShareModel : PageModel
     {
         private readonly NotesAppContext _context;
+        private readonly EmailSender _emailSender;
 
-        public ShareModel(NotesAppContext context)
+        public ShareModel(NotesAppContext context, EmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -57,8 +63,12 @@ namespace NotesApp.Pages.Notes
                 return Page();
             }
 
+            var link = CreateUniqueShareLink(Note.Id.ToString());
 
+            await _emailSender.SendEmailAsync(UserEmail, $"{User.Identity.Name} shared note",
+                        $"See shared note by <a href='{link}'>clicking here</a>.");
 
+            TempData["SuccesflyShared"] = $"{Note.Title} note was shared!";
             return RedirectToPage("/Notes/Index");
         }
 

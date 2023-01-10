@@ -55,7 +55,6 @@ namespace NotesApp.Models
         [StringLength(10000, MinimumLength = 1)]
         public string TextContent { get; set; }
 
-
         public string GetColorClass(Color color)
         {
             string colorClass = "";

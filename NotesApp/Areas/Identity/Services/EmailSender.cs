@@ -7,7 +7,7 @@ using SendGrid.Helpers.Mail;
 
 namespace WebPWrecover.Services;
 
-public class EmailSender : IEmailSender
+public class EmailSender
 {
     private readonly ILogger _logger;
 
@@ -34,7 +34,7 @@ public class EmailSender : IEmailSender
         var client = new SendGridClient(apiKey);
         var msg = new SendGridMessage()
         {
-            From = new EmailAddress("sakata3003@gmail.com", "Password Recovery"),
+            From = new EmailAddress("sakata3003@gmail.com", "Notes Application"),
             Subject = subject,
             PlainTextContent = message,
             HtmlContent = message
