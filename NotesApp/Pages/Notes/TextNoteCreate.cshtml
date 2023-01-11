@@ -16,9 +16,12 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Note.Id" />
+            <input type="hidden" asp-for="Note.Username" />
             <input type="hidden" asp-for="Note.CreationDate" />
             <input type="hidden" asp-for="Note.Title" />
             <input type="hidden" asp-for="Note.Type" />
+            <input type="hidden" asp-for="Note.Color" />
+            <input type="hidden" asp-for="Note.ColorClass" />
             <div class="form-floating">
                 <textarea asp-for="Note.TextContent" class="form-control" placeholder="Input your text here..." id="floatingTextarea2" style="height: 15em"></textarea>
                 <label for="floatingTextarea2">Text Note</label>

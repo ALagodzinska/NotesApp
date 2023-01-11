@@ -1,0 +1,72 @@
+﻿@page
+@model NotesApp.Pages.Notes.ShareModel
+@{
+}
+
+<h1>Share Note - @Model.Note.Title</h1>
+
+<h4>@Model.Note.Title</h4>
+
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+    <input type="hidden" asp-for="Note.Id" />
+    <input type="hidden" asp-for="Note.Type" />
+    <input type="hidden" asp-for="Note.Title" />
+    <input type="hidden" asp-for="Note.Username" />
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card bg-light text-black text-center p-3">
+            <figure class="mb-0">
+                <blockquote class="blockquote">
+                    @if (Model.Note.Type == Models.Type.ToDoList)
+                    {
+                        @foreach (var todo in Model.Note.ToDoList)
+                        {
+                            <input type="hidden" name="Note.ToDoList.Index" value="@todo.Id" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].Id" value="@todo.Id" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].NoteId" value="@todo.NoteId" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].CreationDate" value="@todo.CreationDate" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].PriorityOrder" value="@todo.PriorityOrder" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].Content" value="@todo.Content" />
+                            @Html.DisplayFor(todoItem => todo.IsDone)
+                            @todo.Content
+                            <br />
+                        }
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.Note.TextContent" hidden value="@Model.Note.TextContent" />
+                        <p>@Model.Note.TextContent</p>
+                    }
+                </blockquote>
+            </figure>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">            
+            <div class="form-group">
+                <label asp-for="@Model.UserEmail" class="control-label">Share with another user. Enter user to share email:</label>
+                <input asp-for="@Model.UserEmail" type="email" class="form-control" />
+                <span asp-validation-for="@Model.UserEmail" class="text-danger"></span>
+                <span class="text-danger">@ViewData["EmptyEmail"]</span>
+                <span class="text-danger">@ViewData["EmailError"]</span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-page="/Notes/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

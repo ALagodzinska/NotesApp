@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -5,6 +6,7 @@ using NotesApp.Models;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class TextNoteCreateModel : PageModel
     {
         private readonly NotesApp.Data.NotesAppContext _context;

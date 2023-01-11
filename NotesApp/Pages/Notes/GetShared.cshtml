@@ -1,0 +1,46 @@
+﻿@page
+@model NotesApp.Pages.Notes.GetSharedModel
+@{
+    string textColor = "";
+    ViewData["Title"] = "Shared note";
+}
+<h1>Accept shared note by @Model.Note.Username</h1>
+
+<h3>Do you want to add this note to your page?</h3>
+
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow @Model.Note.ColorClass one-note-di">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Note.Title</h5>
+            <p class="card-text">
+                @if (Model.Note.Type == Models.Type.ToDoList)
+                {
+                    @foreach (var todo in Model.Note.ToDoList)
+                    {
+                        @Html.DisplayFor(todoItem => todo.IsDone)
+                        @todo.Content
+                        <br />
+                    }
+                }
+                else
+                {
+                    @Model.Note.TextContent
+                }
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+                @if (Model.Note.ColorClass != null)
+                {
+                    textColor = Model.Note.ColorClass.Contains("text-white") ? "text-light" : "text-muted";
+                }
+                <small class=@textColor>Note by @Model.Note.Username</small>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+        <input hidden asp-for="Note.Id" value="@Model.Note.Id" />
+        <a asp-page="/Notes/Index" class="btn btn-danger">Decline</a>
+        <button type="submit" class="btn btn-success">Add To My Notes</button>
+    </form>
+
+</div>

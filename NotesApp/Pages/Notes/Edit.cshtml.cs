@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using NuGet.Protocol;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly NotesAppContext _context;
@@ -77,7 +79,9 @@ namespace NotesApp.Pages.Notes
 
             _context.Attach(Note).State = EntityState.Modified;
 
-            if(Note.Type == Models.Type.ToDoList)
+            Note.ColorClass = Note.GetColorClass(Note.Color);
+
+            if (Note.Type == Models.Type.ToDoList)
             {
                 foreach (var todo in Note.ToDoList)
                 {

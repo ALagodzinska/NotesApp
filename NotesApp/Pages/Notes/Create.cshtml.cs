@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using NotesApp.Models;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly NotesApp.Data.NotesAppContext _context;
@@ -37,8 +39,10 @@ namespace NotesApp.Pages.Notes
                 return Page();
             }
 
-            Note.CreationDate = DateTime.Now.Date;
+            Note.CreationDate = DateTime.Now;
+            Note.ColorClass = Note.GetColorClass(Note.Color);
             _context.Notes.Add(Note);
+
             await _context.SaveChangesAsync();
 
             if(Note.Type == Models.Type.ToDoList)

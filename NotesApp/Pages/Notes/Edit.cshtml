@@ -18,11 +18,23 @@
             <input type="hidden" asp-for="Note.Id" />
             <input type="hidden" asp-for="Note.CreationDate" />
             <input type="hidden" asp-for="Note.Type" />
+            <input type="hidden" asp-for="Note.Username" />
             <div class="form-group">
                 <label asp-for="Note.Title" class="control-label"><h3>Note Title</h3></label>
                 <input asp-for="Note.Title" class="form-control" />
                 <span asp-validation-for="Note.Title" class="text-danger"></span>
             </div>
+            <br />
+
+            <label asp-for="Note.Color" class="control-label"></label>
+            <select class="form-control form-control-sm" asp-for="Note.Color">
+                <option value="" selected disabled>Please select note color</option>
+                @foreach (var name in Enum.GetValues(typeof(Models.Color)))
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+
             <br />
             @if (Model.Note.Type == Models.Type.TextNote)
             {

@@ -13,11 +13,26 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Note.Username" hidden value="@User.Identity.Name" />
             <div class="form-group">
                 <label asp-for="Note.Title" class="control-label"></label>
                 <input asp-for="Note.Title" class="form-control" />
                 <span asp-validation-for="Note.Title" class="text-danger"></span>
             </div>
+            <br />
+
+            <label asp-for="Note.Color" class="control-label"></label>
+            <select class="form-control form-control-sm" asp-for="Note.Color">
+                <option value="" selected disabled>Please select note color</option>
+                @foreach (var name in Enum.GetValues(typeof(Models.Color)))
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+
+            <br />
+
+            <label asp-for="Note.Type" class="control-label"></label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" asp-for="Note.Type" value="TextNote" id="flexRadioDefault1">
                 <label class="form-check-label" for="flexRadioDefault1">

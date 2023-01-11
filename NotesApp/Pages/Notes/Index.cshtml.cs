@@ -10,9 +10,11 @@ using NotesApp.Data;
 using NotesApp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NotesApp.Pages.Notes
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly NotesApp.Data.NotesAppContext _context;
@@ -27,13 +29,14 @@ namespace NotesApp.Pages.Notes
         public string CurrentSort { get; set; }
         public string CurrentFilter { get; set; }
         public string TypeSort { get; set; }
+        public string SharedSort { get; set; }
         public PaginatedList<Note> Notes { get; set; } = default!;
 
-        public async Task OnGetAsync(string searchString, string sortByType, int? pageIndex)
+        public async Task OnGetAsync(string searchString, string sortOrder, int? pageIndex)
         {
             if (_context.Notes != null)
             {
-                CurrentSort = sortByType;
+                CurrentSort = sortOrder;               
 
                 if (searchString != null)
                 {
@@ -42,10 +45,14 @@ namespace NotesApp.Pages.Notes
 
                 CurrentFilter = searchString;
 
-                TypeSort = sortByType == "todo_type" ? "text_type" : "todo_type";
+                TypeSort = sortOrder == "todo_type" ? "text_type" : "todo_type";
+                SharedSort = sortOrder == "sharedNotes" ? "myNotes" : "sharedNotes";
 
                 IQueryable<Note> filteredList = from note in _context.Notes
-                                                    select note;
+                                                where note.Username == User.Identity.Name 
+                                                || note.SharedWithUsers.Contains(_context.SharedUsers
+                                                .FirstOrDefault(s => s.UserName == User.Identity.Name && s.NoteId == note.Id))
+                                                select note;
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
@@ -53,13 +60,22 @@ namespace NotesApp.Pages.Notes
                     filteredList = filteredList.OrderBy(n => n.Title);
                 }
 
-                if(sortByType == "text_type")
+                if(sortOrder == "text_type")
                 {
                     filteredList = filteredList.Where(n => n.Type == Models.Type.TextNote);
                 }
-                else if (sortByType == "todo_type")
+                else if (sortOrder == "todo_type")
                 {
                     filteredList = filteredList.Where(n => n.Type == Models.Type.ToDoList);
+                }
+                else if(sortOrder == "myNotes")
+                {
+                    filteredList = filteredList.Where(n => n.Username == User.Identity.Name);
+                }
+                else if (sortOrder == "sharedNotes")
+                {
+                    filteredList = filteredList.Where(note => note.SharedWithUsers.Contains(_context.SharedUsers
+                                                .FirstOrDefault(s => s.UserName == User.Identity.Name && s.NoteId == note.Id)));
                 }
 
                 var pageSize = Configuration.GetValue("PageSize", 6);
