@@ -29,13 +29,14 @@ namespace NotesApp.Pages.Notes
         public string CurrentSort { get; set; }
         public string CurrentFilter { get; set; }
         public string TypeSort { get; set; }
+        public string SharedSort { get; set; }
         public PaginatedList<Note> Notes { get; set; } = default!;
 
-        public async Task OnGetAsync(string searchString, string sortByType, int? pageIndex)
+        public async Task OnGetAsync(string searchString, string sortOrder, int? pageIndex)
         {
             if (_context.Notes != null)
             {
-                CurrentSort = sortByType;
+                CurrentSort = sortOrder;               
 
                 if (searchString != null)
                 {
@@ -44,28 +45,8 @@ namespace NotesApp.Pages.Notes
 
                 CurrentFilter = searchString;
 
-                TypeSort = sortByType == "todo_type" ? "text_type" : "todo_type";
-
-                //IQueryable<SharedUser> queryToFindAllShared = from sharedUser in _context.SharedUsers
-                //                                              where sharedUser.UserName == User.Identity.Name
-                //                                              select sharedUser;
-
-                //var listOfSharedNotes = new List<Note>();
-
-                //foreach(var sharedNote in queryToFindAllShared)
-                //{
-                //    listOfSharedNotes.Add(_context.Notes.FirstOrDefault(n => n.Id == sharedNote.Id));
-                //}
-
-                //var sharedUser = _context.SharedUsers.FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-                //if (sharedUser != null)
-                //{
-                //IQueryable<Note> filteredList = from note in _context.Notes
-                //                                where note.Username == User.Identity.Name
-                //                                where note.SharedWithUsers.Contains(sharedUser)
-                //                                select note;
-                //}
+                TypeSort = sortOrder == "todo_type" ? "text_type" : "todo_type";
+                SharedSort = sortOrder == "sharedNotes" ? "myNotes" : "sharedNotes";
 
                 IQueryable<Note> filteredList = from note in _context.Notes
                                                 where note.Username == User.Identity.Name 
@@ -73,24 +54,28 @@ namespace NotesApp.Pages.Notes
                                                 .FirstOrDefault(s => s.UserName == User.Identity.Name && s.NoteId == note.Id))
                                                 select note;
 
-                //filteredList = filteredList.Where(n => n.Username == User.Identity.Name);
-
-                //        .Where(n => n.SharedWithUsers
-                //.FirstOrDefault(sharedNote => sharedNote.UserName == User.Identity.Name) != null);
-
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     filteredList = filteredList.Where(n => n.Title.Contains(searchString));
                     filteredList = filteredList.OrderBy(n => n.Title);
                 }
 
-                if(sortByType == "text_type")
+                if(sortOrder == "text_type")
                 {
                     filteredList = filteredList.Where(n => n.Type == Models.Type.TextNote);
                 }
-                else if (sortByType == "todo_type")
+                else if (sortOrder == "todo_type")
                 {
                     filteredList = filteredList.Where(n => n.Type == Models.Type.ToDoList);
+                }
+                else if(sortOrder == "myNotes")
+                {
+                    filteredList = filteredList.Where(n => n.Username == User.Identity.Name);
+                }
+                else if (sortOrder == "sharedNotes")
+                {
+                    filteredList = filteredList.Where(note => note.SharedWithUsers.Contains(_context.SharedUsers
+                                                .FirstOrDefault(s => s.UserName == User.Identity.Name && s.NoteId == note.Id)));
                 }
 
                 var pageSize = Configuration.GetValue("PageSize", 6);

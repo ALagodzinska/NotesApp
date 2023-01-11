@@ -28,18 +28,32 @@
     </div>
 </form>
 
-<a asp-page="./Index" asp-route-sortByType="@Model.TypeSort"
+<a asp-page="./Index" asp-route-sortOrder="@Model.TypeSort"
    asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
     Sort by type:
     @if (Model.TypeSort == "text_type")
     {
         <text>Text Notes</text>
     }
-    else if (Model.TypeSort == "todo_type")
+    else if (Model.TypeSort == "todo_type") 
     {
         <text>ToDo Lists</text>
     }
 </a>
+
+<a asp-page="./Index" asp-route-sortOrder="@Model.SharedSort"
+   asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
+    Sort by:
+    @if (Model.SharedSort == "myNotes")
+    {
+        <text>My notes</text>
+    }
+    else if (Model.SharedSort == "sharedNotes")
+    {
+        <text>Shared notes</text>
+    }
+</a>
+
 <br />
 
 <div class="album py-5 bg-light">

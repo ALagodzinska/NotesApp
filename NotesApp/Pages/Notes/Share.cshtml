@@ -9,7 +9,11 @@
 
 
 <form method="post">
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+    <input type="hidden" asp-for="Note.Id" />
+    <input type="hidden" asp-for="Note.Type" />
+    <input type="hidden" asp-for="Note.Title" />
+    <input type="hidden" asp-for="Note.Username" />
     <div class="col-sm-6 col-lg-4 mb-4">
         <div class="card bg-light text-black text-center p-3">
             <figure class="mb-0">
@@ -23,6 +27,7 @@
                             <input type="hidden" name="Note.ToDoList[@todo.Id].NoteId" value="@todo.NoteId" />
                             <input type="hidden" name="Note.ToDoList[@todo.Id].CreationDate" value="@todo.CreationDate" />
                             <input type="hidden" name="Note.ToDoList[@todo.Id].PriorityOrder" value="@todo.PriorityOrder" />
+                            <input type="hidden" name="Note.ToDoList[@todo.Id].Content" value="@todo.Content" />
                             @Html.DisplayFor(todoItem => todo.IsDone)
                             @todo.Content
                             <br />
@@ -30,6 +35,7 @@
                     }
                     else
                     {
+                        <input asp-for="@Model.Note.TextContent" hidden value="@Model.Note.TextContent" />
                         <p>@Model.Note.TextContent</p>
                     }
                 </blockquote>
@@ -38,11 +44,7 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-4">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="@Model.Note.Id" hidden value="@Model.Note.Id" />
-            <input asp-for="@Model.Note.Title" hidden value="@Model.Note.Title" />
-            <input asp-for="@Model.Note.TextContent" hidden value="@Model.Note.TextContent" />
+        <div class="col-md-4">            
             <div class="form-group">
                 <label asp-for="@Model.UserEmail" class="control-label">Share with another user. Enter user to share email:</label>
                 <input asp-for="@Model.UserEmail" type="email" class="form-control" />
