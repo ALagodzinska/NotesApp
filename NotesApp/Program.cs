@@ -9,6 +9,7 @@ using WebPWrecover.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers(); // adding controllers
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<NotesAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NotesAppContext") ?? throw new InvalidOperationException("Connection string 'NotesAppContext' not found.")));
@@ -48,5 +49,6 @@ app.UseAuthentication();;
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers(); // need to map routes for api
 
 app.Run();
