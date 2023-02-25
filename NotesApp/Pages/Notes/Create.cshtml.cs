@@ -12,7 +12,7 @@ using NotesApp.Models;
 
 namespace NotesApp.Pages.Notes
 {
-    //[Authorize]
+    [Authorize]
     public class CreateModel : PageModel
     {
         public IActionResult OnGet()

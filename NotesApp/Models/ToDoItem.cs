@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace NotesApp.Models
 {
@@ -21,6 +22,8 @@ namespace NotesApp.Models
         public int PriorityOrder { get; set; }
 
         public int NoteId { get; set; }
+
+        [JsonIgnore]
         public Note Note { get; set; }
     }
 }

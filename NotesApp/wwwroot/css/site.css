@@ -42,3 +42,7 @@ body {
 .card-body.showContent button.expand-button {
     background-color: gray;
 }
+
+.hidden{
+    display: none;
+}

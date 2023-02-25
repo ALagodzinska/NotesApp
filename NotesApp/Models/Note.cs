@@ -14,13 +14,13 @@ namespace NotesApp.Models
     {
         White,
         Black,
-        LightBlue,
+        //LightBlue,
         Yellow,
         Red,
         Green,
         Grey,
         Blue,        
-        LightGrey
+        //LightGrey
     }
 
     public class Note
@@ -30,8 +30,7 @@ namespace NotesApp.Models
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }
-
-        [Required]
+                
         public string Username { get; set; }
 
         [DataType(DataType.DateTime)]
@@ -52,7 +51,7 @@ namespace NotesApp.Models
         public ICollection<ToDoItem> ToDoList { get; set; }
 
         [Display(Name = "Text")]
-        [StringLength(10000, MinimumLength = 1)]
+        //[StringLength(10000, MinimumLength = 1)]
         public string TextContent { get; set; }
 
         public List<SharedUser> SharedWithUsers { get; set; } = new List<SharedUser>();
@@ -78,15 +77,15 @@ namespace NotesApp.Models
                 case Color.Grey:
                     colorClass = "text-white bg-secondary";
                     break;
-                case Color.LightBlue:
-                    colorClass = "text-dark bg-info";
-                    break;
+                //case Color.LightBlue:
+                //    colorClass = "text-dark bg-info";
+                //    break;
                 case Color.Yellow:
                     colorClass = "text-dark bg-warning";
                     break;
-                case Color.LightGrey:
-                    colorClass = "text-dark bg-light";
-                    break;
+                //case Color.LightGrey:
+                //    colorClass = "text-dark bg-light";
+                //    break;
                 case Color.White:
                     colorClass = "";
                     break;

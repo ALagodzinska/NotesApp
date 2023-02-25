@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace NotesApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NoteController : ControllerBase
     {
         private readonly NotesAppContext _context;
@@ -32,7 +34,7 @@ namespace NotesApp.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Note>> GetNote(int id)
         {
-            var note = await _context.Notes.FindAsync(id);
+            var note = await _context.Notes.Include(i => i.ToDoList).FirstOrDefaultAsync(i => i.Id == id);
 
             if (note == null)
             {
@@ -78,7 +80,11 @@ namespace NotesApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Note>> PostNote(Note note)
         {
+            note.Username = User.Identity.Name;
+            note.CreationDate = DateTime.Now;
+
             _context.Notes.Add(note);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetNote", new { id = note.Id }, note);
