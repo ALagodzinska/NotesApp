@@ -24,18 +24,18 @@ body {
     margin-top: 0em;
 }
 
-.expand-button{
+.expand-button {
     margin-top: .25em;
     margin-bottom: 1em;
-    color: black;    
+    color: black;
 }
 
-.cutoff-text{
+.cutoff-text {
     height: 6em;
     overflow: hidden;
 }
 
-.card-body.showContent p{
+.card-body.showContent p {
     height: auto;
 }
 
@@ -43,6 +43,33 @@ body {
     background-color: gray;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
+
+.delete-icon {
+    float: right;
+}
+
+.delete-icon:hover {
+    cursor: pointer;
+    color: #f34747;
+}
+
+.bg-dark {
+    background-color: #5A5A5A;
+}
+
+.bg-primary {
+    background: radial-gradient(#B0C4DE, #0076CE) !important;
+}
+
+/*.border-gradient {
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+}
+
+.border-gradient-purple {
+    
+}*/

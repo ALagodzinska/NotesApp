@@ -19,42 +19,5 @@ namespace NotesApp.Pages.Notes
         {
             return Page();
         }
-
-
-        //private readonly NotesApp.Data.NotesAppContext _context;
-
-        //public CreateModel(NotesApp.Data.NotesAppContext context)
-        //{
-        //    _context = context;
-        //}
-
-
-
-        //[BindProperty]
-        //public Note Note { get; set; }
-
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //  if (!ModelState.IsValid)
-        //    {
-        //        return Page();
-        //    }
-
-        //    Note.CreationDate = DateTime.Now;
-        //    Note.ColorClass = Note.GetColorClass(Note.Color);
-        //    _context.Notes.Add(Note);
-
-        //    await _context.SaveChangesAsync();
-
-        //    if(Note.Type == Models.Type.ToDoList)
-        //    {
-        //        return RedirectToPage("/ToDoItems/Create", new { noteId = Note.Id.ToString() });
-        //    }
-
-        //    return RedirectToPage("/Notes/TextNoteCreate", new { noteId = Note.Id.ToString() });
-
-        //}
     }
 }

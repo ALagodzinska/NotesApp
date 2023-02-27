@@ -1,5 +1,4 @@
 ﻿@page
-@*@model NotesApp.Pages.Notes.CreateModel*@
 
 @{
     ViewData["Title"] = "Create Note";
@@ -7,41 +6,53 @@
 
 <h1>Create new note</h1>
 
-<form style="max-width: 560px;" id="create-form">
-    <div class="mb-3">
+<form style="max-width: 560px;" id="create-form" class="needs-validation" novalidate>
+    <div class="mb-3 position-relative">
         <label for="note-title-input" class="form-label">Note Title:</label>
-        <input name="title" type="text" class="form-control" id="note-title-input" placeholder="New note...">
+        <input name="title" type="text" class="form-control" id="note-title-input" placeholder="New note..." required>
+        <div class="invalid-feedback">
+            Please enter a title for note.
+        </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 position-relative">
         <label>Note Color:</label>
-        <select class="form-select" aria-label="Note Color:" name="color" id="note-colors-select">
+        <select class="form-select" aria-label="Note Color:" name="color" id="note-colors-select" required>
             <option selected disabled>Select color from menu...</option>
         </select>
+        <div class="invalid-feedback">
+            Please select note color.
+            </div>
     </div>
 
     <div class="mb-3 note-type-area">
         <label>Choose Note Type:</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="type-text-radio" value="TextNote">
+            <input class="form-check-input" type="radio" name="type" id="type-text-radio" value="TextNote" required>
             <label class="form-check-label" for="type-text-radio">
                 Text Note
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="type-todo-radio" value="ToDoList">
+            <input class="form-check-input" type="radio" name="type" id="type-todo-radio" value="ToDoList" required>
             <label class="form-check-label" for="type-todo-radio">
                 ToDo List
             </label>
-        </div>
+            <div class="invalid-feedback">
+                Please select note type.
+            </div>
+        </div>        
     </div>    
 
-    <div class="mb-3 hidden" id="text-note-input">
+    <div class="mb-3 hidden position-relative" id="text-note-input">
         <label>Add Text: </label>
         <textarea id="textarea-input" class="form-control" name="textContent" aria-label="Your text..."></textarea>
+        <div class="invalid-feedback">
+            Please enter a message in the textarea.
+        </div>
     </div>
 
-    <div class="hidden" id="todo-list-input">
+    <div class="hidden position-relative" id="todo-list-input">
         <div class="mb-1">
             <label for="new-todo" class="form-label">Add new todo item:</label>
             <div class="input-group position-relative">
@@ -49,15 +60,17 @@
                 <button class="btn btn-outline-secondary" type="button" id="btn-add-task">Add</button>
                 <div class="invalid-feedback">
                     Please enter a message in the textarea.
+                    List should have at least one item.
                 </div>
             </div>
         </div>
         <br />
+        <div class="invalid-feedback">
+            Please enter at least one todo item.
+        </div>
 
         <div>
             <ul class="list-group" id="todo-list">
-                <li class="list-group-item">Save as todo list</li>
-                <li class="list-group-item">Make visible if type is todo notes</li>
             </ul>
         </div>
     </div>
@@ -68,60 +81,3 @@
 </form>
 
 <script src="~/js/createNote.js"></script>
-
-@*<h1>Create</h1>
-
-<h4>Note</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Note.Username" hidden value="@User.Identity.Name" />
-            <div class="form-group">
-                <label asp-for="Note.Title" class="control-label"></label>
-                <input asp-for="Note.Title" class="form-control" />
-                <span asp-validation-for="Note.Title" class="text-danger"></span>
-            </div>
-            <br />
-
-            <label asp-for="Note.Color" class="control-label"></label>
-            <select class="form-control form-control-sm" asp-for="Note.Color">
-                <option value="" selected disabled>Please select note color</option>
-                @foreach (var name in Enum.GetValues(typeof(Models.Color)))
-                {
-                    <option value="@name">@name</option>
-                }
-            </select>
-
-            <br />
-
-            <label asp-for="Note.Type" class="control-label"></label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" asp-for="Note.Type" value="TextNote" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Text Note
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" asp-for="Note.Type" value="ToDoList" id="flexRadioDefault2">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    ToDo List
-                </label>
-            </div>
-            <span asp-validation-for="Note.Type" class="text-danger"></span>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Next" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="/Notes/Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
