@@ -30,11 +30,6 @@ body {
     color: black;
 }
 
-.cutoff-text {
-    height: 6em;
-    overflow: hidden;
-}
-
 .card-body.showContent p {
     height: auto;
 }
@@ -61,15 +56,31 @@ body {
 }
 
 .bg-primary {
+    /*background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), radial-gradient(#B0C4DE, #0076CE) !important;*/
     background: radial-gradient(#B0C4DE, #0076CE) !important;
 }
 
-/*.border-gradient {
-    border: 10px solid;
-    border-image-slice: 1;
-    border-width: 5px;
+.cutoff-text {
+    height: 6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    /* truncate to 4 lines */
+    -webkit-line-clamp: 4;
 }
 
-.border-gradient-purple {
-    
-}*/
+.btn-readmore {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn-group {
+    float: right;
+}

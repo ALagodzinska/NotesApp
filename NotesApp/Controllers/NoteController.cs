@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Data;
 using NotesApp.Models;
+using NuGet.Protocol;
 
 namespace NotesApp.Controllers
 {
@@ -27,7 +30,7 @@ namespace NotesApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Note>>> GetNotes()
         {
-            return await _context.Notes.ToListAsync();
+            return await _context.Notes.Include(n => n.ToDoList).Include(n => n.SharedWithUsers).ToListAsync();
         }
 
         // GET: api/Note/5
@@ -82,6 +85,7 @@ namespace NotesApp.Controllers
         {
             note.Username = User.Identity.Name;
             note.CreationDate = DateTime.Now;
+            note.ColorClass = note.GetColorClass();
 
             _context.Notes.Add(note);
 

@@ -56,9 +56,9 @@ namespace NotesApp.Pages.Notes
             if (Note.SharedWithUsers.FirstOrDefault(u => u.UserName == User.Identity.Name) == null)
             {
                 _context.SharedUsers.Add(sharedUser);
-                await _context.SaveChangesAsync();
 
                 Note.SharedWithUsers.Add(sharedUser);
+                await _context.SaveChangesAsync();                
             }
             TempData["AddedShareNote"] = $"{Note.Title} note was added to your note list!";
 

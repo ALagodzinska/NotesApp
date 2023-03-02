@@ -79,7 +79,7 @@ namespace NotesApp.Pages.Notes
 
             _context.Attach(Note).State = EntityState.Modified;
 
-            Note.ColorClass = Note.GetColorClass(Note.Color);
+            Note.ColorClass = Note.GetColorClass();
 
             if (Note.Type == Models.Type.ToDoList)
             {

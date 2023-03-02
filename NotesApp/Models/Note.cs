@@ -56,11 +56,11 @@ namespace NotesApp.Models
 
         public List<SharedUser> SharedWithUsers { get; set; } = new List<SharedUser>();
 
-        public string GetColorClass(Color color)
+        public string GetColorClass()
         {
             string colorClass = "";
 
-            switch (color)
+            switch (this.Color)
             {
                 case Color.Black:
                     colorClass = "text-white bg-dark";

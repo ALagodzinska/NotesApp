@@ -1,5 +1,21 @@
 ﻿@page "/"
-@model NotesApp.Pages.Notes.IndexModel
+
+
+<div>
+    <h1>List of Notes <a style="float:right" class="btn btn-secondary" href="/Notes/Create">Add Note</a></h1>
+</div>
+
+<div class="album py-2 bg-light">
+    <div class="container">
+        <div class="row" id="notes-index">
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/indexNote.js"></script>
+
+@*@model NotesApp.Pages.Notes.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -35,7 +51,7 @@
     {
         <text>Text Notes</text>
     }
-    else if (Model.TypeSort == "todo_type") 
+    else if (Model.TypeSort == "todo_type")
     {
         <text>ToDo Lists</text>
     }
@@ -126,4 +142,4 @@
    asp-route-currentFilter="@Model.CurrentFilter"
    class="btn btn-primary @nextDisabled">
     Next
-</a>
+</a>*@
