@@ -7,10 +7,23 @@
 
 <div class="album py-2 bg-light">
     <div class="container">
-        <div class="row" id="notes-index">
+        <div class="row paginated-list" id="notes-index">
 
         </div>
     </div>
+</div>
+
+<div class="pagination-container">
+    <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
+        &lt;
+    </button>
+
+    <div id="pagination-numbers">
+    </div>
+
+    <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
+        &gt;
+    </button>
 </div>
 
 <script src="~/js/indexNote.js"></script>

@@ -39,23 +39,39 @@ const addReadMoreBtn = function (currentNote) {
   }
 };
 
-const displayNotes = function (data) {
-  // clear the notes container
-  allNotesConatiner.innerHTML = "";
+const formatDate = function (date) {
+    const jsDate = new Date(Date.parse(date));
 
-  // create an html element foreach of them
-  data.forEach((note) => {
+    // adds 0 if only one number 
+    const day = `${jsDate.getDate()}`.padStart(2, 0);
+    const month = `${(jsDate.getMonth() + 1)}`.padStart(2, 0);
+    const year = jsDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+
+const createNoteHTML = function (note) {
+
     // display todo or text based on note type
     const noteContent =
-      note.type === 1
-        ? `${note.toDoList
-            .map((todo) => {
-              const isDone = todo.isDone ? "checked" : "";
-              const checkbox = `<input type="checkbox" ${isDone} disabled>`;
-              return `${checkbox} ${todo.content}<br/>`;
-            })
-            .join("")}`
-        : `${note.textContent}`;
+        note.type === 1
+            ? `${note.toDoList
+                .map((todo) => {
+                    const isDone = todo.isDone ? "checked" : "";
+                    const checkbox = `<input type="checkbox" ${isDone} disabled>`;
+                    return `${checkbox} ${todo.content}<br/>`;
+                })
+                .join("")}`
+            : `${note.textContent}`;
+
+    // display buttons based on your note or shared
+    const buttons = note.username === currentUser.name ? `<a href="/Notes/Edit?id=${note.id}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="/Notes/Delete?id=${note.id}" class="btn btn-sm btn-outline-secondary">Delete</a>
+                                <a href="/Notes/Share?id=${note.id}" class="btn btn-sm btn-outline-secondary share-btn"><span>Share</span></a>` :
+        `<a href="/Notes/Remove?id=${note.id}" class="btn btn-sm btn-outline-secondary">Remove</a>`;
+
+    // display date of creation or user who shared his note
+    const smallContent = note.username === currentUser.name ? formatDate(note.creationDate) : `Created by ${note.username}`;
 
     const noteHtml = `<div class="col-md-4" id="note-${note.id}">
                     <div class="card mb-4 box-shadow ${note.colorClass} one-note-di">
@@ -65,13 +81,24 @@ const displayNotes = function (data) {
                                 ${noteContent}
                             </p>
                             <div class="btn-group btn-light btn-outline-light">
-                                <a href="/Notes/Edit?id=${note.id}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                <a href="/Notes/Delete?id=${note.id}" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                <a href="/Notes/Share?id=${note.id}" class="btn btn-sm btn-outline-secondary share-btn"><span>Share</span></a>
-                            </div>                   
+                                ${buttons}
+                            </div> 
+                            <small>${smallContent}</small>
                         </div>                        
                     </div>
                 </div>`;
+
+    return noteHtml;
+}
+
+const displayNotes = function (data) {
+  // clear the notes container
+    allNotesConatiner.innerHTML = "";
+
+  // create an html element foreach of them
+    data.forEach((note) => {
+
+    const noteHtml = createNoteHTML(note);
 
     // add note to page
     allNotesConatiner.insertAdjacentHTML("afterbegin", noteHtml);
