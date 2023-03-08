@@ -30,7 +30,7 @@ namespace NotesApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Note>>> GetNotes()
         {
-            return await _context.Notes.Include(n => n.ToDoList).Include(n => n.SharedWithUsers).ToListAsync();
+            return await _context.Notes.Include(n => n.ToDoList).Include(n => n.SharedWithUsers).OrderByDescending(n => n.CreationDate).ToListAsync();
         }
 
         // GET: api/Note/5
