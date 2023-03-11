@@ -1,25 +1,36 @@
 ﻿const uri = "api/Note";
 const uriToGetUser = "api/User";
 
+let currentUser = {};
 let allNotes;
+let sortedNotes;
+
+// Filter parameters
+let displayType = "all"; // all | text | todo
+let displayCreator = "all"; // all | my | shared
+let filterBy = null;
 
 // container for all notes
 const allNotesConatiner = document.getElementById("notes-index");
 
-const paginationLimit = 9;
-
 // Pagination buttons
+const paginationLimit = 9;
 const prevPageBtn = document.getElementById("prev-button");
 const nextPageBtn = document.getElementById("next-button");
 let curPageIndex = 1;
 let pageCount = 1;
+const paginationNumbers = document.getElementById("pagination-numbers");
 
-let currentUser = {};
-
-// const getCurrentUser = () =>
-//   fetch(uriToGetUser)
-//     .then((response) => response.json())
-//     .catch((error) => console.error("Unable to get current user.", error));
+// Filters buttons
+const dropdownBtn = document.querySelector(".dropdown-toggle");
+const sortTextNoteBtn = document.getElementById("text-note-sort");
+const sortToDoBtn = document.getElementById("todo-sort");
+const sortMyNotesBtn = document.getElementById("my-sort");
+const sortSharedBtn = document.getElementById("shared-sort");
+const displayAllBtn = document.getElementById("notes-all");
+// Search btn
+const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
 
 const getCurrentUser = async () => {
   let response = await fetch(uriToGetUser);
@@ -130,20 +141,40 @@ const displayNotes = function (data) {
   });
 };
 
-// const getNotes = function () {
-//   return fetch(uri)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // get only user notes and shared notes
-//       const userNotes = data.filter(
-//         (note) =>
-//           note.username === currentUser.name ||
-//           note.sharedWithUsers.find((u) => u.userName === currentUser.name)
-//       );
-//       displayNotes(userNotes);
-//     })
-//     .catch((error) => console.error("Unable to get items.", error));
-// };
+const renderNotes = function () {
+  // create a copy
+  sortedNotes = [...allNotes];
+
+  if (displayType === "text") {
+    sortedNotes = sortedNotes.filter((item) => item.type === 0);
+  }
+
+  if (displayType === "todo") {
+    sortedNotes = sortedNotes.filter((item) => item.type === 1);
+  }
+
+  if (displayCreator === "my") {
+    sortedNotes = sortedNotes.filter(
+      (item) => item.username === currentUser.name
+    );
+  }
+
+  if (displayCreator === "shared") {
+    sortedNotes = sortedNotes.filter(
+      (item) => item.username !== currentUser.name
+    );
+  }
+
+  if (filterBy) {
+    sortedNotes = sortedNotes.filter((item) =>
+      item.title.toLowerCase().includes(filterBy)
+    );
+  }
+
+  displayNotes(sortedNotes.slice(0, paginationLimit));
+  // render pagination
+  addPagination(sortedNotes);
+};
 
 const getNotes = async function () {
   let response = await fetch(uri);
@@ -157,9 +188,7 @@ const getNotes = async function () {
   );
 
   allNotes = userNotes;
-
-  displayNotes(allNotes.slice(0, paginationLimit));
-  addPagination();
+  renderNotes();
 };
 
 const notesDisplayOnPage = function (index) {
@@ -169,7 +198,7 @@ const notesDisplayOnPage = function (index) {
   curPageIndex = index;
 
   disableArrows();
-  displayNotes(allNotes.slice(startIndex, endIndex));
+  displayNotes(sortedNotes.slice(startIndex, endIndex));
 };
 
 const disableArrows = function () {
@@ -177,11 +206,21 @@ const disableArrows = function () {
   nextPageBtn.disabled = curPageIndex === pageCount ? true : false;
 };
 
-const addPagination = function () {
-  // Pagination
-  const paginationNumbers = document.getElementById("pagination-numbers");
+const changePage = function (pageNumber) {
+  // display notes
+  notesDisplayOnPage(pageNumber);
+  // clear number active classes
+  [...paginationNumbers.children].forEach((b) => b.classList.remove("active"));
+  // activate page number
+  const pageBtn = document.querySelector(`[page-index="${pageNumber}"]`);
+  pageBtn.classList.add("active");
+};
 
-  pageCount = Math.ceil(allNotes.length / paginationLimit);
+const addPagination = function (notes) {
+  // Pagination
+  paginationNumbers.innerHTML = "";
+
+  pageCount = Math.ceil(notes.length / paginationLimit);
   disableArrows();
 
   const appendPageNumber = (index) => {
@@ -192,7 +231,7 @@ const addPagination = function () {
     pageNumber.setAttribute("aria-label", "Page " + index);
 
     pageNumber.addEventListener("click", function () {
-      notesDisplayOnPage(index);
+      changePage(index);
     });
 
     paginationNumbers.appendChild(pageNumber);
@@ -203,27 +242,67 @@ const addPagination = function () {
       appendPageNumber(i);
     }
   };
+
   getPaginationNumbers();
 };
 
 prevPageBtn.addEventListener("click", function () {
   if (curPageIndex !== 1) {
-    notesDisplayOnPage(curPageIndex - 1);
+    changePage(curPageIndex - 1);
   }
 });
 
 nextPageBtn.addEventListener("click", function () {
   if (curPageIndex !== pageCount) {
-    notesDisplayOnPage(curPageIndex + 1);
+    changePage(curPageIndex + 1);
   }
 });
 
-// getCurrentUser().then((user) => {
-//   // set user before loading notes
-//   currentUser = user;
-//   // load notes
-//   getNotes();
-// });
+// Filters
+sortTextNoteBtn.addEventListener("click", function () {
+  displayCreator = "all";
+  dropdownBtn.innerHTML = "";
+  dropdownBtn.innerHTML = "Options: Text Notes";
+  displayType = "text";
+  renderNotes();
+});
+
+sortToDoBtn.addEventListener("click", function () {
+  displayCreator = "all";
+  dropdownBtn.innerHTML = "";
+  dropdownBtn.innerHTML = "Options: ToDo Lists";
+  displayType = "todo";
+  renderNotes();
+});
+
+sortMyNotesBtn.addEventListener("click", function () {
+  displayType = "all";
+  dropdownBtn.innerHTML = "";
+  dropdownBtn.innerHTML = "Options: My Notes";
+  displayCreator = "my";
+  renderNotes();
+});
+
+sortSharedBtn.addEventListener("click", function () {
+  displayType = "all";
+  dropdownBtn.innerHTML = "";
+  dropdownBtn.innerHTML = "Options: Shared Notes";
+  displayCreator = "shared";
+  renderNotes();
+});
+
+displayAllBtn.addEventListener("click", function () {
+  dropdownBtn.innerHTML = "";
+  dropdownBtn.innerHTML = "Options: All Notes";
+  displayType = "all";
+  displayCreator = "all";
+  renderNotes();
+});
+
+searchBtn.addEventListener("click", function () {
+  filterBy = searchInput.value;
+  renderNotes();
+});
 
 let startProgram = async function () {
   // get user

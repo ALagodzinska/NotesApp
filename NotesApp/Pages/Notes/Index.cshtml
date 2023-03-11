@@ -5,6 +5,27 @@
     <h1>List of Notes <a style="float:right" class="btn btn-secondary" href="/Notes/Create">Add Note</a></h1>
 </div>
 
+<div style="display: flex; justify-content: space-between;" class="pb-2">
+    <div>
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 11.7em; text-align:left">
+           Options:  
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <h6 class="dropdown-header" id="dropdown-header">Display: </h6>
+            <a class="dropdown-item" id="notes-all">All Notes</a>
+            <a class="dropdown-item" id="text-note-sort">Type: Text Notes</a>
+            <a class="dropdown-item" id="todo-sort">Type: ToDo Lists</a>
+            <a class="dropdown-item" id="my-sort">Creator: My Notes</a>
+            <a class="dropdown-item" id="shared-sort">Creator: Shared Notes</a>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+        <input type="text" id="search-input" class="form-control" placeholder="Search By Title..."/>
+        <button class="btn btn-sm btn-light" id="search-btn" style="display:flex; flex-direction:row">Search</button>
+    </div>
+</div>
+
 <div class="album py-2 bg-light">
     <div class="container">
         <div class="row paginated-list" id="notes-index">
@@ -26,133 +47,7 @@
     </button>
 </div>
 
-<script src="~/js/indexNote.js"></script>
-
-@*@model NotesApp.Pages.Notes.IndexModel
-
-@{
-    ViewData["Title"] = "Index";
-    string textColor = "";
-    var isShared = TempData["SuccesflyShared"];
-    var isAddedSharedNote = TempData["AddedShareNote"];
+@section Scripts
+{
+    <script src="~/js/indexNote.js"></script>
 }
-
-<h1>List of Notes</h1>
-
-<p style="color:green;">@isShared</p>
-<p style="color:green;">@isAddedSharedNote</p>
-
-<p>
-    <a asp-page="/Notes/Create" class="btn text-white btn-floating" style="background-color:steelblue;"><i class="fas fa-plus"></i>Add New Note</a>
-</p>
-
-<form asp-page="./Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Find by title:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-page="./Index">Back to full List</a>
-        </p>
-    </div>
-</form>
-
-<a asp-page="./Index" asp-route-sortOrder="@Model.TypeSort"
-   asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
-    Sort by type:
-    @if (Model.TypeSort == "text_type")
-    {
-        <text>Text Notes</text>
-    }
-    else if (Model.TypeSort == "todo_type")
-    {
-        <text>ToDo Lists</text>
-    }
-</a>
-
-<a asp-page="./Index" asp-route-sortOrder="@Model.SharedSort"
-   asp-route-currentFilter="@Model.CurrentFilter" class="btn btn-light">
-    Sort by:
-    @if (Model.SharedSort == "myNotes")
-    {
-        <text>My notes</text>
-    }
-    else if (Model.SharedSort == "sharedNotes")
-    {
-        <text>Shared notes</text>
-    }
-</a>
-
-<br />
-
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            @foreach (var note in Model.Notes)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow @note.ColorClass one-note-di">
-                        <div class="card-body">
-                            <h5 class="card-title">@note.Title</h5>
-                            <p class="card-text cutoff-text">
-                                @if (note.Type == Models.Type.ToDoList)
-                                {
-                                    @foreach (var todo in note.ToDoList)
-                                    {
-                                        @Html.DisplayFor(todoItem => todo.IsDone)
-                                        @todo.Content
-                                        <br />
-                                    }
-                                }
-                                else
-                                {
-                                    @note.TextContent
-                                }
-                            </p>
-                            <button class="expand-button btn btn-outline-secondary btn-sm">Read More</button>
-                            <div class="d-flex justify-content-between align-items-center">
-                                @if (note.ColorClass != null)
-                                {
-                                    textColor = note.ColorClass.Contains("text-white") ? "text-light" : "text-muted";
-                                }
-                                @if(@note.Username != @User.Identity.Name)
-                                {
-                                    <small class=@textColor>Created by @note.Username</small>
-                                }
-                                else
-                                {
-                                <div class="btn-group btn-light btn-outline-light">
-                                    <a asp-page="/Notes/Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <a asp-page="/Notes/Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                    <a asp-page="/Notes/Share" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary share-btn"><span>Share</span></a>
-                                </div>
-                                <small class=@textColor>@note.CreationDate.ToString("dd/MM/yyyy h:mm tt")</small>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
-
-@{
-    var prevDisabled = !Model.Notes.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Notes.HasNextPage ? "disabled" : "";
-}
-
-<a asp-page="./Index"
-   asp-route-sortByType="@Model.CurrentSort"
-   asp-route-pageIndex="@(Model.Notes.PageIndex - 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
-   class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-<a asp-page="./Index"
-   asp-route-sortByType="@Model.CurrentSort"
-   asp-route-pageIndex="@(Model.Notes.PageIndex + 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
-   class="btn btn-primary @nextDisabled">
-    Next
-</a>*@
